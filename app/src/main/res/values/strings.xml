@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">UqacEvent</string>
-    <string name="title_home">Home</string>
+    <string name="title_calendar">Calendrier</string>
+    <string name="title_creation">Publier</string>
+    <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 </resources>
