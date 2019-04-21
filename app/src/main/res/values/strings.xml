@@ -4,4 +4,10 @@
     <string name="title_creation">Publier</string>
     <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="connexion">Connexion</string>
+    <string name="inscription">Inscription</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de Passe</string>
+    <string name="confirm_password">Confirmer le mot de passe</string>
+    <string name="name">Nom d\'utilisateur</string>
 </resources>

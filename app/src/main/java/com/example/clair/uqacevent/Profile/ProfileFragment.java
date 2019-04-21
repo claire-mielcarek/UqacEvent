@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent;
+package com.example.clair.uqacevent.Profile;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.clair.uqacevent.R;
 
 public class ProfileFragment extends Fragment {
     @Nullable
