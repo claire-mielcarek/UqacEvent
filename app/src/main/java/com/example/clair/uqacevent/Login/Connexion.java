@@ -1,8 +1,6 @@
 package com.example.clair.uqacevent.Login;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,47 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-//import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.example.clair.uqacevent.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Profile.User;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-//import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-/*import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;*/
 import com.example.clair.uqacevent.R;
 
 public class Connexion extends Fragment {
 
-    private static final int RC_SIGN_IN = 10;
-    private static final String EMAIL = "email";
-    private static final String PUBLIC_PROFILE = "public_profile";
-    private boolean changeData;
-    private boolean mail;
-    private boolean first = true;
-    private String newData;
-    private SignInButton signButton;
     private FirebaseAuth auth;
-    private FirebaseUser firebaseUser;
-    //private DatabaseReference database;
-    private Context context;
 
 
     @Nullable
@@ -63,27 +33,26 @@ public class Connexion extends Fragment {
     public void onStart() {
         super.onStart();
         auth = FirebaseAuth.getInstance();
-        firebaseUser = auth.getCurrentUser();
         View v = getActivity().findViewById(R.id.inscription_button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inscription(view);
+                inscription();
             }
         });
         v = getActivity().findViewById(R.id.connexion_button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                connexionWithMail(view);
+                connexionWithMail();
             }
         });
     }
 
-    public void connexionWithMail(View v) {
+    public void connexionWithMail() {
         // recupere les edit text contenant les donnees
-        final EditText edit_mail = ((EditText) getView().findViewById(R.id.mail));
-        final EditText edit_mdp = ((EditText) getView().findViewById(R.id.mdp));
+        final EditText edit_mail = ( getView().findViewById(R.id.mail));
+        final EditText edit_mdp = ( getView().findViewById(R.id.mdp));
 
         //recupere les donnees de l'utilisateur
         String mail = edit_mail.getText().toString();
@@ -95,8 +64,6 @@ public class Connexion extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    firebaseUser = auth.getCurrentUser();
-                    Log.d("Connexion", "signInWithMail:success : " + firebaseUser.getUid());
                     LoadDataAndStartActivity();
                 } else {
                     // debug
@@ -114,34 +81,8 @@ public class Connexion extends Fragment {
         });
     }
 
-    public void changeDataFunction(final String value) {
-        if (mail) {
-            firebaseUser.updateEmail(value).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        //database.child(firebaseUser.getUid()).child("mail").setValue(value);
-                        Log.d("CHANGE DATA", "User email address updated.");
-                    } else {
-                        Log.d("CHANGE DATA", "User email address update failed.");
-                    }
-                }
-            });
-        } else {
-            firebaseUser.updatePassword(value).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Log.d("CHANGE DATA", "User password updated.");
-                    } else {
-                        Log.d("CHANGE DATA", "User password update failed.");
-                    }
-                }
-            });
-        }
-    }
 
-    public void inscription(View v) {
+    public void inscription() {
         // rediriger vers l'activité d'inscription
         //getActivity().getActionBar().setTitle(R.string.inscription);
         Fragment f = new Inscription();
@@ -153,8 +94,6 @@ public class Connexion extends Fragment {
 
     public void LoadDataAndStartActivity() {
         final User user;
-        if (changeData)
-            changeDataFunction(newData);
         user = User.InstantiateUser();
         Log.d("[CONNEXION]", "User retourné : " + user);
 

@@ -6,4 +6,16 @@
     <color name="colorSecondaryLight">#B0B5A3</color>
     <color name="colorBackground">#FEFEFD</color>
     <color name="colorAccent">#009F7C</color>
+
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#0000FF</color>
+    <color name="grey">#a0a0a0</color>
+    <color name="calendar_number">#424A56</color>
+    <color name="pink">#ff70a0</color>
+    <color name="green">#388E3C</color>
+    <color name="yellow">#FFFFCC00</color>
+    <color name="orange">#855b3a</color>
+    <color name="black">#000000</color>
 </resources>

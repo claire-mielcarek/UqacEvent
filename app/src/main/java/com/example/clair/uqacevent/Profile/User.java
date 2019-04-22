@@ -15,21 +15,19 @@ import com.google.firebase.database.ValueEventListener;
 public class User {
     private static User user;
 
-    String name;
-    String email;
-    String description;
-    String dateInscription;
-    boolean publicAccount;
-    String contact;
+    private String name;
+    private String email;
+    private String description;
+    private String dateInscription;
+    private boolean publicAccount;
+    private String contact;
     // Firebase reference
-    private transient FirebaseAuth auth;
-    private transient FirebaseUser fireUser;
     private transient DatabaseReference database;
 
     private String uid;
     private boolean first;
 
-    public User() {
+    private User() {
         this.email = "";
         this.name = "";
         this.description = "";
@@ -37,8 +35,8 @@ public class User {
         this.publicAccount = false;
         this.contact = "";
 
-        auth = FirebaseAuth.getInstance();
-        fireUser = auth.getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser fireUser = auth.getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();
         this.uid = fireUser.getUid();
         first = true;
@@ -75,6 +73,7 @@ public class User {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                interfaceForResult.OnFailed();
                 Log.d("[USER]", "Failed to read values from DataBase", databaseError.toException());
             }
         });
@@ -116,10 +115,6 @@ public class User {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getDateInscription() {
-        return dateInscription;
     }
 
     public boolean isPublicAccount() {

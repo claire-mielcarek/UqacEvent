@@ -1,8 +1,6 @@
 package com.example.clair.uqacevent.Login;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,23 +12,13 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.example.clair.uqacevent.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Profile.User;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-/*
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-*/
 
 import com.example.clair.uqacevent.R;
 import com.google.firebase.database.DataSnapshot;
@@ -67,19 +55,12 @@ public class Inscription extends Fragment {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try_inscription(view);
+                try_inscription();
             }
         });
     }
-/*
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        actionBar.setTitle(R.string.signup);
-    }
-    */
 
-    public void try_inscription(View v){
+    public void try_inscription(){
         int code = -1;
         first = true;
         probleme = false;
@@ -240,7 +221,7 @@ public class Inscription extends Fragment {
             message = "Une erreur inconnue a été rencontré. Veuillez réessayer.";
         }
 
-        //Utils.MyMessageButton(message, context);
+        Log.d("[INSCRIPTION]", message);
     }
 
 }
