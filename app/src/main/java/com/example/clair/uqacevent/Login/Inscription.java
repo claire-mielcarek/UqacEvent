@@ -33,11 +33,16 @@ import com.google.firebase.database.ValueEventListener;
 */
 
 import com.example.clair.uqacevent.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Inscription extends Fragment {
     private FirebaseAuth auth;
-    /*
     private DatabaseReference database;
+    /*
     private Context context;
 */
     private EditText mail;
@@ -56,7 +61,8 @@ public class Inscription extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();// recupere l'objet firebase pour l'authantification et une reference vers la database
+        database = FirebaseDatabase.getInstance().getReference();
         View v = getActivity().findViewById(R.id.inscription);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,11 +75,6 @@ public class Inscription extends Fragment {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.inscription);
-
-        // recupere l'objet firebase pour l'authantification et une reference vers la database
-        database = FirebaseDatabase.getInstance().getReference();
         actionBar.setTitle(R.string.signup);
     }
     */
@@ -81,7 +82,7 @@ public class Inscription extends Fragment {
     public void try_inscription(View v){
         int code = -1;
         first = true;
-        //probleme = false;
+        probleme = false;
 
         mail = getActivity().findViewById(R.id.mail);
         mdp = getActivity().findViewById(R.id.mdp);
@@ -99,7 +100,7 @@ public class Inscription extends Fragment {
                 mdp_value.equals(mdp_confirm_value)){
 
             // check if first name and last name already exist
-            /*
+
             database.child("Users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,22 +122,23 @@ public class Inscription extends Fragment {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError) {
                     ErrorDetected(-1);
+
                 }
             });
-            */
+
 
         }else{
             // definie le code d'erreur
-            if (mail_value.equals(""))
+            if (nom_value.equals(""))
+                code = 5;
+            else if (mail_value.equals(""))
                 code = 1;
             else if (mdp_value.equals(""))
                 code  = 2;
             else if (mdp_confirm_value.equals(""))
                 code = 3;
-            else if (nom_value.equals(""))
-                code = 5;
             else if (!mdp_value.equals(mdp_confirm_value))
                 code = 7;
 
@@ -152,10 +154,11 @@ public class Inscription extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 FirebaseUser firebaseUser;
-                /*
+
                 if (task.isSuccessful()){
                     // enregistrer les informations dans la base de donnees
                     firebaseUser = auth.getCurrentUser();
+                    Log.d("[INSCRIPTION]", "current user : " + firebaseUser);
 
                     if (firebaseUser != null) {
                         database.child("Users").child(firebaseUser.getUid()).child("dateMembre").setValue(date_membre);
@@ -186,7 +189,7 @@ public class Inscription extends Fragment {
                 }else{
                     Log.d("InscriptionMail", String.valueOf(task.getException()));    // probleme lors de la creation du compte
                     ErrorDetected(0);
-                }*/
+                }
             }
         });
     }

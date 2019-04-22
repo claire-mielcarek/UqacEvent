@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1074054394383",
+    "firebase_url": "https://uqacevents.firebaseio.com",
+    "project_id": "uqacevents",
+    "storage_bucket": "uqacevents.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074054394383:android:d4357e0d7b572819",
+        "android_client_info": {
+          "package_name": "com.example.clair.uqacevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1074054394383-f5kh57j563hd3tfa8ls7t1hfuphparlv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.clair.uqacevent",
+            "certificate_hash": "ba9631744cad763cc5b1cc50eb75ff877762a08f"
+          }
+        },
+        {
+          "client_id": "1074054394383-gmk8a67okdfal8dfn6917ubj15rhf14a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMqmgIFDhiPdSsbU4FBJVej463oFu1hFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1074054394383-gmk8a67okdfal8dfn6917ubj15rhf14a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
