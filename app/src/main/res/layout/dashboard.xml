@@ -1,10 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_dashboard"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f83d8fb7">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="#fff"
+                android:elevation="8dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/news_title"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:text="Titre"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/news_description"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/news_title"
+                    android:layout_marginTop="10dp"
+                    android:text="Description"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/news_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/news_description"
+                    android:layout_marginTop="10dp"
+                    android:text="Heure"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="105dp"
+                    android:layout_height="135dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/news_title"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_image" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
