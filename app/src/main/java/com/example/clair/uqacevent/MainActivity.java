@@ -17,15 +17,12 @@ import com.example.clair.uqacevent.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Profile.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigation;
     ActionBar actionBar;
     private FirebaseAuth mAuth;
     boolean isAlreadyInstantiated;
-    private DatabaseReference data;
     private FirebaseUser firebaseUser;
 
     @Override
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
 
-            data = FirebaseDatabase.getInstance().getReference();
+
 
             // load user data if connected
             if (firebaseUser != null) {
@@ -77,13 +74,6 @@ public class MainActivity extends AppCompatActivity {
                         //Utils.MyMessageButton("Read personal value has failed.", context);
                     }
                 });
-            }else{
-                /*setContentView(R.layout.activity_main);
-                list = findViewById(R.id.home_publications);
-                adapter = new PostAdapter(context, listItems);
-                list.setAdapter(adapter);
-                addPostListener();
-                ((PostAdapter) list.getAdapter()).notifyDataSetChanged();*/
             }
         }
     }
