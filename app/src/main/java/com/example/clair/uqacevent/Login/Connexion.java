@@ -62,6 +62,8 @@ public class Connexion extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
         View v = getActivity().findViewById(R.id.inscription_button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,28 +80,6 @@ public class Connexion extends Fragment {
         });
     }
 
-    /*
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // get the context
-        changeData = getIntent().getBooleanExtra("ChangeData", false);
-        mail = getIntent().getBooleanExtra("Mail", false);
-        if (changeData)
-            newData = getIntent().getStringExtra("Value");
-
-        // permet de connaitre l'utilisateur connecte
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance().getReference("Users");
-        context = this;
-        actionBar.setTitle(R.string.signin);
-
-        FacebookSdk.sdkInitialize(context);
-        setContentView(R.layout.connexion);
-    }
-    */
-
     public void connexionWithMail(View v) {
         // recupere les edit text contenant les donnees
         final EditText edit_mail = ((EditText) getView().findViewById(R.id.mail));
@@ -110,8 +90,8 @@ public class Connexion extends Fragment {
         String mdp = edit_mdp.getText().toString();
 
         // connexion a la base de donnee avec les donnees de l'utilisateur
-        /*
-        auth.signInWithEmailAndPassword(mail, mdp).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+        auth.signInWithEmailAndPassword(mail, mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -131,7 +111,7 @@ public class Connexion extends Fragment {
                     Log.d("SIGNIN", "Connexion a échoué");
                 }
             }
-        });*/
+        });
     }
 
     public void changeDataFunction(final String value) {
@@ -175,7 +155,8 @@ public class Connexion extends Fragment {
         final User user;
         if (changeData)
             changeDataFunction(newData);
-        user = new User();
+        user = User.InstantiateUser();
+        Log.d("[CONNEXION]", "User retourné : " + user);
 
         user.attachUserToFirebase(true, new IResultConnectUser() {
             @Override
@@ -187,14 +168,14 @@ public class Connexion extends Fragment {
                         .replace(R.id.fragment_container, f, "findThisFragment")
                         .addToBackStack(null)
                         .commit();
+                Log.d("[CONNEXION]", "fragment must have changed");
             }
             @Override
             public void OnFailed() {
-                Log.w("DatabaseChange", "Failed to read values");
+                Log.d("[CONNEXION]", "Failed to read values");
 
                 // show message for firebaseUser then reload connection
                 //Utils.MyMessageButton("Read personal value has failed. Retry later please", context);
-                startActivity(new Intent(context, Connexion.class));
             }
         });
     }

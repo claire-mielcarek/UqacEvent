@@ -89,6 +89,8 @@ public class Inscription extends Fragment {
         mdp_confirm = getActivity().findViewById(R.id.mdp_confirm);
         nom = getActivity().findViewById(R.id.nom);
 
+        final String typeAccount = ((RadioButton) getActivity().findViewById(((RadioGroup) getActivity().findViewById(R.id.type_account)).getCheckedRadioButtonId())).getText().toString();
+        final String accountIsPublic = Boolean.toString(typeAccount.equals(getString(R.string.public_account)));
         final String mail_value = mail.getText().toString();
         final String mdp_value = mdp.getText().toString();
         String mdp_confirm_value = mdp_confirm.getText().toString();
@@ -115,7 +117,7 @@ public class Inscription extends Fragment {
                         }
 
                         if (!probleme)
-                            completeSignIn(mail_value, mdp_value, date_membre, nom_value);
+                            completeSignIn(mail_value, mdp_value, date_membre, nom_value, accountIsPublic);
 
                         first = false;
                     }
@@ -148,7 +150,7 @@ public class Inscription extends Fragment {
     }
 
 
-    private void completeSignIn(String mail, String mdp, final String date_membre, final String nom){
+    private void completeSignIn(String mail, String mdp, final String date_membre, final String nom, final String accountIsPublic){
 
         auth.createUserWithEmailAndPassword(mail, mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -164,15 +166,16 @@ public class Inscription extends Fragment {
                         database.child("Users").child(firebaseUser.getUid()).child("dateMembre").setValue(date_membre);
                         database.child("Users").child(firebaseUser.getUid()).child("mail").setValue(firebaseUser.getEmail());
                         database.child("Users").child(firebaseUser.getUid()).child("nom").setValue(nom);
+                        database.child("Users").child(firebaseUser.getUid()).child("accountIsPublic").setValue(accountIsPublic);
 
                         //setContentView(R.layout.waiting);
 
                         // get data of user from firebase
-                        User user = new User();
+
+                        User user = User.InstantiateUser();
                         user.attachUserToFirebase(true, new IResultConnectUser() {
                             @Override
                             public void OnSuccess() {
-                                // send to profile
                                 Fragment f = new ProfileFragment();
                                 getActivity().getFragmentManager().beginTransaction()
                                         .replace(R.id.fragment_container, f, "findThisFragment")

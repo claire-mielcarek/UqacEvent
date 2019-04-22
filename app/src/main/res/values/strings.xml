@@ -10,4 +10,12 @@
     <string name="password">Mot de Passe</string>
     <string name="confirm_password">Confirmer le mot de passe</string>
     <string name="name">Nom d\'utilisateur</string>
+    <string name="private_account">Compte Privé (Ne permet pas de créer des événements)</string>
+    <string name="public_account">Compte Public</string>
+    <string name="account_type">Type de compte : </string>
+    <string name="profile_description">A propos : </string>
+    <string name="profile_contact">Comment nous contacter : </string>
+    <string name="profile_email">Email : </string>
+    <string name="profile_name">Nom d\'utilisateur : </string>
+    <string name="enregistrer">Sauvegarder</string>
 </resources>
