@@ -162,6 +162,7 @@ public class Inscription extends Fragment {
                             public void OnSuccess() {
                                 Fragment f = new ProfileFragment();
                                 ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_profile));
+                                ((MainActivity) getActivity()).addCreationMenuItem();
                             }
 
                             @Override

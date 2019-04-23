@@ -81,7 +81,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_chevron_right_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_filter_list_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -91,8 +91,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="388e3c" />
-                            <entry key="outputName" value="ic_chevron_right" />
+                            <entry key="outputName" value="ic_filter" />
                             <entry key="sourceFile" value="C:\Users\clair" />
                           </map>
                         </option>

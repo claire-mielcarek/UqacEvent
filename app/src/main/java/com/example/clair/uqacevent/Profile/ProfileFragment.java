@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.clair.uqacevent.Login.Connexion;
 import com.example.clair.uqacevent.MainActivity;
@@ -91,6 +92,7 @@ public class ProfileFragment extends Fragment {
                 auth.signOut();
                 Fragment f = new Connexion();
                 ((MainActivity) getActivity()).openFragment(f, getString(R.string.connexion));
+                ((MainActivity) getActivity()).deleteCreationMenuItem();
                 return true;
 
             default:
@@ -124,6 +126,7 @@ public class ProfileFragment extends Fragment {
                     user.setContact(contact);
                     data.child("Users").child(user.getUid()).child("contact").setValue(contact);
                 }
+                Toast.makeText(getActivity(), R.string.modif_saved, Toast.LENGTH_LONG).show();
                 Log.d("[PROFILE]", "données à sauvegarder : " + contactEdit.getText() + " "+ descriptionEdit.getText() );
             }
         });
