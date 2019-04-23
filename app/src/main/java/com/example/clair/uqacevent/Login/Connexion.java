@@ -1,6 +1,8 @@
 package com.example.clair.uqacevent.Login;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Profile.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +29,7 @@ public class Connexion extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(getTag());
         return inflater.inflate(R.layout.login_connexion, container, false);
     }
 
@@ -86,10 +90,7 @@ public class Connexion extends Fragment {
         // rediriger vers l'activité d'inscription
         //getActivity().getActionBar().setTitle(R.string.inscription);
         Fragment f = new Inscription();
-        getActivity().getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, f, "findThisFragment")
-                .addToBackStack(null)
-                .commit();
+        ((MainActivity) getActivity()).openFragment(f, getString(R.string.inscription));
     }
 
     public void LoadDataAndStartActivity() {
@@ -103,10 +104,7 @@ public class Connexion extends Fragment {
                 // start Profile Activity
                 //getActivity().getActionBar().setTitle(R.string.title_profile);
                 Fragment f = new ProfileFragment();
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, f, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_profile));
                 Log.d("[CONNEXION]", "fragment must have changed");
             }
             @Override

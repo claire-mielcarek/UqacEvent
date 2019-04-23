@@ -1,7 +1,9 @@
 package com.example.clair.uqacevent.Calendar;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -34,6 +36,7 @@ public class DayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setTitle(getTag());
         return inflater.inflate(R.layout.calendar_day, container, false);
     }
 
@@ -52,7 +55,8 @@ public class DayFragment extends Fragment {
         listAdapter = new EventAdapter(getActivity(), events);
         list = getActivity().findViewById(R.id.calendar_list_events);
         TextView title = getActivity().findViewById(R.id.calendar_day_title);
-        title.setText(day + " " + Calendar.FR_MONTH_NAMES[month] + " " + year);
+        title.setText("Blalbla");
+        getActivity().setTitle(day + " " + Calendar.FR_MONTH_NAMES[month] + " " + year);
         addListEventListener();
 
         list.setAdapter(listAdapter);

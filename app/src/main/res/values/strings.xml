@@ -4,6 +4,7 @@
     <string name="title_creation">Publier</string>
     <string name="title_profile">Profile</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_day">Événements</string>
     <string name="connexion">Connexion</string>
     <string name="inscription">Inscription</string>
     <string name="email">Email</string>

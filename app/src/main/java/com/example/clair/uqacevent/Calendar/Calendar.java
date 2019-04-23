@@ -3,13 +3,13 @@ package com.example.clair.uqacevent.Calendar;
 //https://github.com/avi-kr/SimpleCalendarTemplate
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.R;
 
 /**
@@ -49,7 +50,7 @@ public class Calendar extends LinearLayout {
     LinearLayout weekSixLayout;
     private LinearLayout[] weeks;
 
-    Activity activity;
+    MainActivity activity;
 
     private int currentDateDay, chosenDateDay, currentDateMonth,
             chosenDateMonth, currentDateYear, chosenDateYear,
@@ -87,7 +88,7 @@ public class Calendar extends LinearLayout {
     private void init(Context context) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         firstDayOfTheWeek = java.util.Calendar.MONDAY;
-        activity = (Activity) context;
+        activity = (MainActivity) context;
 
         View view = inflate(getContext(), R.layout.calendar, this);
         calendar = java.util.Calendar.getInstance();
@@ -358,10 +359,7 @@ public class Calendar extends LinearLayout {
             args.putInt("month", pickedDateMonth);
             args.putInt("year", pickedDateYear);
             f.setArguments(args);
-            activity.getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, f, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
+            activity.openFragment(f, pickedDateDay + " " + Calendar.FR_MONTH_NAMES[pickedDateMonth] + " " + pickedDateYear);
         }
     }
 

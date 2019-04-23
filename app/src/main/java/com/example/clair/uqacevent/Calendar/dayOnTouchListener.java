@@ -1,9 +1,9 @@
 package com.example.clair.uqacevent.Calendar;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -12,20 +12,21 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 
 import com.example.clair.uqacevent.Calendar.DayFragment;
+import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.R;
 
 public class dayOnTouchListener implements OnTouchListener {
     int day;
     int month;
     int year;
-    Activity activity;
+    MainActivity activity;
     Button b;
     int currentDay;
     int currentMonth;
     int currentYear;
 
     public dayOnTouchListener(Activity activity, Button b, int currentDay, int currentMonth, int currentYear) {
-        this.activity = activity;
+        this.activity = (MainActivity) activity;
         this.b = b;
         this.currentDay = currentDay;
         this.currentMonth = currentMonth;
@@ -49,10 +50,7 @@ public class dayOnTouchListener implements OnTouchListener {
             args.putInt("month", month);
             args.putInt("year", year);
             f.setArguments(args);
-            activity.getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, f, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
+            activity.openFragment(f, day + " " + Calendar.FR_MONTH_NAMES[month] + " " + year);
             return true;
         }
 

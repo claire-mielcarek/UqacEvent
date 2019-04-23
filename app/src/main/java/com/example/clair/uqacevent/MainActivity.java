@@ -1,11 +1,11 @@
 package com.example.clair.uqacevent;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,7 +19,7 @@ import com.example.clair.uqacevent.Profile.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     BottomNavigationView navigation;
     ActionBar actionBar;
     private FirebaseAuth mAuth;
@@ -88,30 +88,25 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
                     if(mAuth.getCurrentUser() != null) {
-                        actionBar.setTitle(R.string.title_profile);
                         f = new ProfileFragment();
-                        openFragment(f);
+                        openFragment(f, getString(R.string.title_profile));
                     }
                     else{
-                        actionBar.setTitle(R.string.connexion);
                         f = new Connexion();
-                        openFragment(f);
+                        openFragment(f, getString(R.string.connexion));
                     }
                     return true;
                 case R.id.navigation_dashboard:
-                    actionBar.setTitle(R.string.title_dashboard);
                     f = new DashboardFragment();
-                    openFragment(f);
+                    openFragment(f, getString(R.string.title_dashboard));
                     return true;
                 case R.id.navigation_calendar:
-                    actionBar.setTitle(R.string.title_calendar);
                     f = new CalendarFragment();
-                    openFragment(f);
+                    openFragment(f, getString(R.string.title_calendar));
                     return true;
                 case R.id.navigation_creation:
-                    actionBar.setTitle(R.string.title_creation);
                     f = new AddEventFragment();
-                    openFragment(f);
+                    openFragment(f, getString(R.string.title_creation));
                     return true;
             }
             return false;
@@ -119,12 +114,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-    private void openFragment(Fragment f){
-        FragmentManager manager = getFragmentManager();
+    public void openFragment(Fragment f, String tag) {
+        FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_container,f);
+        transaction.replace(R.id.fragment_container, f, tag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
