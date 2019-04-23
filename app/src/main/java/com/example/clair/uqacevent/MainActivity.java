@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.clair.uqacevent.Calendar.CalendarFragment;
+import com.example.clair.uqacevent.EventCreation.AddEventFragment;
 import com.example.clair.uqacevent.Login.Connexion;
 import com.example.clair.uqacevent.Login.IResultConnectUser;
 import com.example.clair.uqacevent.Profile.ProfileFragment;

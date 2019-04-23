@@ -10,8 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import com.example.clair.uqacevent.R;
 
-import java.util.ArrayList;
-
 public class EventAdapter extends BaseAdapter{
     private ArrayList<Event> data;
     private Context context;
@@ -31,7 +29,7 @@ public class EventAdapter extends BaseAdapter{
         String place = e.getPlace();
         String title = e.getTitle();
         if (view ==null){
-            view = LayoutInflater.from(context).inflate(R.layout.dashboard, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.event, viewGroup, false);
         }
 
         TextView titleView = view.findViewById(R.id.news_title);
