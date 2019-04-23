@@ -20,6 +20,8 @@
     <string name="profile_name">Nom d\'utilisateur : </string>
     <string name="enregistrer">Sauvegarder</string>
     <string name="inscription_btn">Pas encore inscrit ?</string>
+    <string name="add_event">Ajouter événement</string>
+    <string name="add_event_type">Type d\'événement : </string>
 
     <string name="monday">M</string>
     <string name="tuesday">T</string>

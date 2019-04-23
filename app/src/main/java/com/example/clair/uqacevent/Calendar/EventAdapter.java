@@ -29,7 +29,7 @@ public class EventAdapter extends BaseAdapter{
         String place = e.getPlace();
         String title = e.getTitle();
         if (view ==null){
-            view = LayoutInflater.from(context).inflate(R.layout.dashboard, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.event, viewGroup, false);
         }
 
         TextView titleView = view.findViewById(R.id.news_title);
