@@ -1,9 +1,8 @@
 package com.example.clair.uqacevent.Calendar;
 
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.clair.uqacevent.R;
 import com.google.firebase.database.DataSnapshot;
@@ -30,12 +28,11 @@ public class DayFragment extends Fragment {
     DatabaseReference data;
     ArrayList<Event> events;
     ArrayList<String> eventsKey;
-    private ValueEventListener listListener;
     EventAdapter listAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         getActivity().setTitle(getTag());
         return inflater.inflate(R.layout.calendar_day, container, false);
     }
@@ -44,6 +41,7 @@ public class DayFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Bundle b = getArguments();
+        assert b != null;
         day = b.getInt("day");
         month = b.getInt("month");
         year = b.getInt("year");
@@ -54,30 +52,32 @@ public class DayFragment extends Fragment {
 
         listAdapter = new EventAdapter(getActivity(), events);
         list = getActivity().findViewById(R.id.calendar_list_events);
-        TextView title = getActivity().findViewById(R.id.calendar_day_title);
-        title.setText("Blalbla");
         getActivity().setTitle(day + " " + Calendar.FR_MONTH_NAMES[month] + " " + year);
         addListEventListener();
-
-        list.setAdapter(listAdapter);
+        if (list != null) {
+            list.setAdapter(listAdapter);
+        }
+        else{
+            Log.d("[DAY]", "L'objet list à modifier est null");
+        }
     }
 
     private void addListEventListener() {
-        listListener = new ValueEventListener() {
+        ValueEventListener listListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot event : dataSnapshot.child("Events").getChildren()){
+                for (DataSnapshot event : dataSnapshot.child("Events").getChildren()) {
                     String s = (String) event.child("date").getValue();
                     String d = (String) event.child("description").getValue();
                     String p = (String) event.child("place").getValue();
                     String t = (String) event.child("title").getValue();
                     String o = (String) event.child("organize").getValue();
                     String key = event.getKey();
-                    if (isCurrentDate(s) && !eventsKey.contains(key)){
+                    if (isCurrentDate(s) && !eventsKey.contains(key)) {
                         eventsKey.add(event.getKey());
                         events.add(new Event(s, d, p, t, o));
                     }
-                    Log.d("[DAY]", "event date : " + s );
+                    Log.d("[DAY]", "event date : " + s);
                 }
                 listAdapter.notifyDataSetChanged();
             }

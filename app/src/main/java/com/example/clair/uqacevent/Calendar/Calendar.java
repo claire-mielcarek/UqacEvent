@@ -2,21 +2,14 @@ package com.example.clair.uqacevent.Calendar;
 
 //https://github.com/avi-kr/SimpleCalendarTemplate
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,8 +30,6 @@ public class Calendar extends LinearLayout {
             "Septembre", "Octobre", "Novembre", "Decembre"};
     private static final int WEEK_SIZE = 7;
 
-    private TextView currentDate;
-    private TextView currentMonth;
     private Button selectedDayButton;
     private Button[] days;
     private int firstDayOfTheWeek;
@@ -56,12 +47,9 @@ public class Calendar extends LinearLayout {
             chosenDateMonth, currentDateYear, chosenDateYear,
             pickedDateDay, pickedDateMonth, pickedDateYear;
     int userMonth, userYear;
-    private DayClickListener mListener;
-    private Drawable userDrawable;
 
     private java.util.Calendar calendar;
     LayoutParams defaultButtonParams;
-    private LayoutParams userButtonParams;
 
     public Calendar(Context context) {
         super(context);
@@ -75,13 +63,6 @@ public class Calendar extends LinearLayout {
 
     public Calendar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public Calendar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
 
@@ -99,8 +80,8 @@ public class Calendar extends LinearLayout {
         weekFourLayout = view.findViewById(R.id.calendar_week_4);
         weekFiveLayout = view.findViewById(R.id.calendar_week_5);
         weekSixLayout = view.findViewById(R.id.calendar_week_6);
-        currentDate = view.findViewById(R.id.current_date);
-        currentMonth = view.findViewById(R.id.current_month);
+        TextView currentDate = view.findViewById(R.id.current_date);
+        TextView currentMonth = view.findViewById(R.id.current_month);
 
         currentDateDay = chosenDateDay = calendar.get(java.util.Calendar.DAY_OF_MONTH);
 
@@ -112,15 +93,12 @@ public class Calendar extends LinearLayout {
             currentDateYear = chosenDateYear = calendar.get(java.util.Calendar.YEAR);
         }
 
-        currentDate.setText("" + currentDateDay);
-        currentMonth.setText(" " + FR_MONTH_NAMES[currentDateMonth] + " " + currentDateYear);
+        String day = "" + currentDateDay;
+        currentDate.setText(day);
+        String monthAndYear = " " + FR_MONTH_NAMES[currentDateMonth] + " " + currentDateYear;
+        currentMonth.setText(monthAndYear);
 
         initializeDaysWeeks();
-        if (userButtonParams != null) {
-            defaultButtonParams = userButtonParams;
-        } else {
-            defaultButtonParams = getdaysLayoutParams();
-        }
         addDaysinCalendar(defaultButtonParams, context, metrics);
 
         initCalendarWithDate(chosenDateYear, chosenDateMonth, chosenDateDay);
@@ -163,13 +141,13 @@ public class Calendar extends LinearLayout {
         int dayNumber = 1;
         int daysLeftInFirstWeek;
         int indexOfDayAfterLastDayOfMonth;
-        int indexOfFirstDayOfMonth = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % this.WEEK_SIZE;
+        int indexOfFirstDayOfMonth = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % WEEK_SIZE;
 
         if (firstDayOfCurrentMonth != this.firstDayOfTheWeek) {
-            daysLeftInFirstWeek = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % this.WEEK_SIZE;
+            daysLeftInFirstWeek = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % WEEK_SIZE;
             indexOfDayAfterLastDayOfMonth = daysLeftInFirstWeek + daysInCurrentMonth;
             Log.d("[CALENDAR]", "First day of the week isn't monday");
-            Log.d("[CALENDAR]", "indices of days : from " + indexOfFirstDayOfMonth + " to " + indexOfFirstDayOfMonth + daysInCurrentMonth % this.WEEK_SIZE);
+            Log.d("[CALENDAR]", "indices of days : from " + indexOfFirstDayOfMonth + " to " + indexOfFirstDayOfMonth + daysInCurrentMonth % WEEK_SIZE);
             for (int i = indexOfFirstDayOfMonth; i < indexOfFirstDayOfMonth + daysInCurrentMonth; ++i) {
                 if (currentDateMonth == chosenDateMonth
                         && currentDateYear == chosenDateYear
@@ -197,9 +175,9 @@ public class Calendar extends LinearLayout {
                 ++dayNumber;
             }
         } else {
-            daysLeftInFirstWeek = this.WEEK_SIZE;
+            daysLeftInFirstWeek = WEEK_SIZE;
             indexOfDayAfterLastDayOfMonth = daysLeftInFirstWeek + daysInCurrentMonth;
-            for (int i = this.WEEK_SIZE; i < this.WEEK_SIZE + daysInCurrentMonth; ++i) {
+            for (int i = WEEK_SIZE; i < WEEK_SIZE + daysInCurrentMonth; ++i) {
                 if (currentDateMonth == chosenDateMonth
                         && currentDateYear == chosenDateYear
                         && dayNumber == currentDateDay) {
@@ -237,23 +215,21 @@ public class Calendar extends LinearLayout {
             int[] dateArr = new int[3];
 
             if (chosenDateMonth > 0) {
-                if (currentDateMonth == chosenDateMonth - 1
-                        && currentDateYear == chosenDateYear
-                        && daysInPreviousMonth == currentDateDay) {
-                } else {
-                    days[i].setBackgroundColor(Color.TRANSPARENT);
-                }
+                if (currentDateMonth != chosenDateMonth - 1
+                        || currentDateYear != chosenDateYear
+                        || daysInPreviousMonth != currentDateDay) {
+                            days[i].setBackgroundColor(Color.TRANSPARENT);
+                        }
 
                 dateArr[0] = daysInPreviousMonth;
                 dateArr[1] = chosenDateMonth - 1;
                 dateArr[2] = chosenDateYear;
             } else {
-                if (currentDateMonth == 11
-                        && currentDateYear == chosenDateYear - 1
-                        && daysInPreviousMonth == currentDateDay) {
-                } else {
-                    days[i].setBackgroundColor(Color.TRANSPARENT);
-                }
+                if (currentDateMonth != 11
+                        || currentDateYear != chosenDateYear - 1
+                        || daysInPreviousMonth != currentDateDay) {
+                            days[i].setBackgroundColor(Color.TRANSPARENT);
+                        }
 
                 dateArr[0] = daysInPreviousMonth;
                 dateArr[1] = 11;
@@ -382,35 +358,6 @@ public class Calendar extends LinearLayout {
                 ++dayCounter;
             }
         }
-    }
-
-    private LayoutParams getdaysLayoutParams() {
-        LayoutParams buttonParams = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        buttonParams.weight = 1;
-        return buttonParams;
-    }
-
-    public void setUserDaysLayoutParams(LayoutParams userButtonParams) {
-        this.userButtonParams = userButtonParams;
-    }
-
-    public void setUserCurrentMonthYear(int userMonth, int userYear) {
-        this.userMonth = userMonth;
-        this.userYear = userYear;
-    }
-
-    public void setDayBackground(Drawable userDrawable) {
-        this.userDrawable = userDrawable;
-    }
-
-    public interface DayClickListener {
-        void onDayClick(View view);
-    }
-
-    public void setCallBack(DayClickListener mListener) {
-        this.mListener = mListener;
     }
 /*
     private void setDayOnTouchListener(Button day) {

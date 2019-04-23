@@ -19,7 +19,7 @@ import com.example.clair.uqacevent.Profile.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigation;
     ActionBar actionBar;
     private FirebaseAuth mAuth;
@@ -44,10 +44,9 @@ public class MainActivity extends AppCompatActivity{
         User user;
         Log.d("[HOME_ACTIVITY]", "onStart");
 
-        if(!this.isAlreadyInstantiated) {
+        if (!this.isAlreadyInstantiated) {
             Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
-
 
 
             // load user data if connected
@@ -87,11 +86,10 @@ public class MainActivity extends AppCompatActivity{
             Fragment f;
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
-                    if(mAuth.getCurrentUser() != null) {
+                    if (mAuth.getCurrentUser() != null) {
                         f = new ProfileFragment();
                         openFragment(f, getString(R.string.title_profile));
-                    }
-                    else{
+                    } else {
                         f = new Connexion();
                         openFragment(f, getString(R.string.connexion));
                     }

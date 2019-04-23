@@ -1,11 +1,11 @@
 package com.example.clair.uqacevent.Calendar;
 
 public class Event {
-    String date;
-    String description;
-    String place;
-    String title;
-    String organizer;
+    private String date;
+    private String description;
+    private String place;
+    private String title;
+    private String organizer;
 
     public Event(String date, String description, String place, String title, String organizer) {
         this.date = date;

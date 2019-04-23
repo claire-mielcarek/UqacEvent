@@ -11,19 +11,18 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 
-import com.example.clair.uqacevent.Calendar.DayFragment;
 import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.R;
 
 public class dayOnTouchListener implements OnTouchListener {
-    int day;
-    int month;
-    int year;
-    MainActivity activity;
-    Button b;
-    int currentDay;
-    int currentMonth;
-    int currentYear;
+    private int day;
+    private int month;
+    private int year;
+    private MainActivity activity;
+    private Button b;
+    private int currentDay;
+    private int currentMonth;
+    private int currentYear;
 
     public dayOnTouchListener(Activity activity, Button b, int currentDay, int currentMonth, int currentYear) {
         this.activity = (MainActivity) activity;

@@ -10,8 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import com.example.clair.uqacevent.R;
 
-import java.util.ArrayList;
-
 public class EventAdapter extends BaseAdapter{
     private ArrayList<Event> data;
     private Context context;
