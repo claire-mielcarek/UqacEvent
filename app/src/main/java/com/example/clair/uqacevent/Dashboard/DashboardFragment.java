@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent;
+package com.example.clair.uqacevent.Dashboard;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,7 +18,10 @@ import android.widget.TextView;
 
 import com.example.clair.uqacevent.Calendar.Event;
 import com.example.clair.uqacevent.Calendar.EventAdapter;
+import com.example.clair.uqacevent.Login.Connexion;
+import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.Profile.User;
+import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -61,11 +67,13 @@ public class DashboardFragment extends Fragment {
                         String newsDate = (String) event.child("date").getValue();
                         String newsPlace = (String) event.child("place").getValue();
                         String newsOrganizer = (String) event.child("organizer").getValue();
+                        String newsType = (String) event.child("type").getValue();
+                        String newsOrganizerId = (String) event.child("organizerId").getValue();
 
                         String key = event.getKey();
                         if (!eventsKey.contains(key)) {
                             eventsKey.add(key);
-                            events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer));
+                            events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer, newsType, newsOrganizerId));
                         }
                     }
                 }
@@ -87,6 +95,7 @@ public class DashboardFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
+        setHasOptionsMenu(true);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         data = FirebaseDatabase.getInstance().getReference();
@@ -101,4 +110,23 @@ public class DashboardFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.filters, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.action_filter:
+                Fragment f = new FilterFragment();
+                ((MainActivity) getActivity()).openFragment(f, getString(R.string.filters));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

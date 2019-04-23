@@ -72,8 +72,9 @@ public class AddEventFragment extends Fragment {
                 String place = ETPlace.getText().toString();
                 String typeEvent = sTypeEvent.getSelectedItem().toString();
                 String organizer = auth.getInstance().getCurrentUser().getDisplayName();
+                String organizerId = auth.getInstance().getCurrentUser().getUid();
 
-                Event newEvent = new Event(date, description, place, title, organizer, typeEvent);
+                Event newEvent = new Event(date, description, place, title, organizer, typeEvent, organizerId);
 
                 DatabaseReference eventsRef = database.child("Events");
                 newEventRef = eventsRef.push();

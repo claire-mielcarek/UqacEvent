@@ -11,9 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.clair.uqacevent.Calendar.CalendarFragment;
+import com.example.clair.uqacevent.Dashboard.DashboardFragment;
 import com.example.clair.uqacevent.EventCreation.AddEventFragment;
 import com.example.clair.uqacevent.Login.Connexion;
 import com.example.clair.uqacevent.Login.IResultConnectUser;
@@ -71,11 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment f = new DashboardFragment();
         openFragment(f, getString(R.string.title_dashboard));
+        invalidateOptionsMenu();
     }
 
     /**
      * Ajoute les items du menu de navigation
      * Si b est vrai, on ajoute aussi l'item de création d'events
+     *
      * @param b boolean
      */
     private void createMenu(boolean b) {
@@ -83,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
         navigation.getMenu().removeItem(R.id.navigation_calendar);
         navigation.getMenu().removeItem(R.id.navigation_creation);
         navigation.getMenu().removeItem(R.id.navigation_profile);
-        navigation.getMenu().add(Menu.NONE, R.id.navigation_dashboard, 1, R.string.title_dashboard ).setIcon(R.drawable.ic_dashboard_black_24dp);
-        navigation.getMenu().add(Menu.NONE, R.id.navigation_calendar, 2, R.string.title_calendar ).setIcon(R.drawable.ic_date_range_black_24dp);
-        if(b) {
+        navigation.getMenu().add(Menu.NONE, R.id.navigation_dashboard, 1, R.string.title_dashboard).setIcon(R.drawable.ic_dashboard_black_24dp);
+        navigation.getMenu().add(Menu.NONE, R.id.navigation_calendar, 2, R.string.title_calendar).setIcon(R.drawable.ic_date_range_black_24dp);
+        if (b) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
         }
-        navigation.getMenu().add(Menu.NONE, R.id.navigation_profile, 4, R.string.title_profile ).setIcon(R.drawable.ic_person_black_24dp);
+        navigation.getMenu().add(Menu.NONE, R.id.navigation_profile, 4, R.string.title_profile).setIcon(R.drawable.ic_person_black_24dp);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -131,18 +133,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, f, tag);
         transaction.addToBackStack(null);
         transaction.commit();
+        invalidateOptionsMenu();
     }
 
-    public void addCreationMenuItem(){
+    public void addCreationMenuItem() {
         MenuItem m = navigation.getMenu().findItem(R.id.navigation_creation);
         if (m == null) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
         }
     }
 
-    public void deleteCreationMenuItem(){
+    public void deleteCreationMenuItem() {
         MenuItem m = navigation.getMenu().findItem(R.id.navigation_creation);
-        if (m != null){
+        if (m != null) {
             navigation.getMenu().removeItem(R.id.navigation_creation);
         }
     }

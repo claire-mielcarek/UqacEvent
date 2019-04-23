@@ -71,11 +71,13 @@ public class DayFragment extends Fragment {
                     String d = (String) event.child("description").getValue();
                     String p = (String) event.child("place").getValue();
                     String t = (String) event.child("title").getValue();
-                    String o = (String) event.child("organize").getValue();
+                    String o = (String) event.child("organizer").getValue();
+                    String type = (String) event.child("type").getValue();
+                    String id = (String) event.child("organizerId").getValue();
                     String key = event.getKey();
                     if (isCurrentDate(s) && !eventsKey.contains(key)) {
                         eventsKey.add(event.getKey());
-                        events.add(new Event(s, d, p, t, o));
+                        events.add(new Event(s, d, p, t, o, type, id));
                     }
                     Log.d("[DAY]", "event date : " + s);
                 }

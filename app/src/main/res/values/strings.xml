@@ -23,7 +23,7 @@
     <string name="add_event">Ajouter événement</string>
     <string name="add_event_type">Type d\'événement : </string>
     <string name="modif_saved">Modifications sauvegardées</string>
-
+    <string name="filters">Filtrer</string>
     <string name="monday">M</string>
     <string name="tuesday">T</string>
     <string name="wednesday">W</string>

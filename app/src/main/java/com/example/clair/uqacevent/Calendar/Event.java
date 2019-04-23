@@ -7,22 +7,16 @@ public class Event {
     private String title;
     private String organizer;
     private String type;
+    private String organizerId;
 
-    public Event(String date, String description, String place, String title, String organizer) {
-        this.date = date;
-        this.description = description;
-        this.place = place;
-        this.title = title;
-        this.organizer = organizer;
-    }
-
-    public Event(String date, String description, String place, String title, String organizer, String type) {
+    public Event(String date, String description, String place, String title, String organizer, String type, String organizerId) {
         this.date = date;
         this.description = description;
         this.place = place;
         this.title = title;
         this.organizer = organizer;
         this.type = type;
+        this.organizerId = organizerId;
     }
 
     public String getDate() {
@@ -47,5 +41,9 @@ public class Event {
 
     public String getType() {
         return type;
+    }
+
+    public String getOrganizerId() {
+        return organizerId;
     }
 }
