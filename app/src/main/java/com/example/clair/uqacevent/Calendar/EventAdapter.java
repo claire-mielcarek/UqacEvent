@@ -35,7 +35,7 @@ public class EventAdapter extends BaseAdapter{
         TextView titleView = view.findViewById(R.id.news_title);
         TextView descrView = view.findViewById(R.id.news_description);
         TextView dateView = view.findViewById(R.id.news_time);
-        //TextView titlePlace = view.findViewById(R.id.place);
+        //TextView titlePlace = calendarView.findViewById(R.id.place);
         titleView.setText(title);
         descrView.setText(description);
         dateView.setText(date);

@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.clair.uqacevent.Calendar.Calendar
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <FrameLayout
+            android:id="@+id/calendar_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </com.example.clair.uqacevent.Calendar.Calendar>
+            android:layout_height="match_parent"/>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
+
+

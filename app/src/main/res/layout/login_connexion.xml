@@ -71,7 +71,8 @@
             android:layout_height="wrap_content"
             android:paddingEnd="7dp"
             android:paddingStart="7dp"
-            android:text="@string/inscription" />
+            android:text="@string/inscription_btn"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 

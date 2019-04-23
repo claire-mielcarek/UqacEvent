@@ -10,7 +10,9 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,9 +28,9 @@ public class Calendar extends LinearLayout {
 
     private static final String CUSTOM_GREY = "#a0a0a0";
     public static final String[] FR_MONTH_NAMES = {"Janvier", "Février", "Mars", "Avril",
-            "Mai", "Juin", "Juillet", "Aout",
-            "Septembre", "Octobre", "Novembre", "Decembre"};
+            "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
     private static final int WEEK_SIZE = 7;
+    private static final int MONTH_NUMBER = 12;
 
     private Button selectedDayButton;
     private Button[] days;
@@ -40,6 +42,9 @@ public class Calendar extends LinearLayout {
     LinearLayout weekFiveLayout;
     LinearLayout weekSixLayout;
     private LinearLayout[] weeks;
+    TextView currentDate;
+
+    View calendarView;
 
     MainActivity activity;
 
@@ -71,17 +76,16 @@ public class Calendar extends LinearLayout {
         firstDayOfTheWeek = java.util.Calendar.MONDAY;
         activity = (MainActivity) context;
 
-        View view = inflate(getContext(), R.layout.calendar, this);
+        calendarView = inflate(getContext(), R.layout.calendar, this);
         calendar = java.util.Calendar.getInstance();
 
-        weekOneLayout = view.findViewById(R.id.calendar_week_1);
-        weekTwoLayout = view.findViewById(R.id.calendar_week_2);
-        weekThreeLayout = view.findViewById(R.id.calendar_week_3);
-        weekFourLayout = view.findViewById(R.id.calendar_week_4);
-        weekFiveLayout = view.findViewById(R.id.calendar_week_5);
-        weekSixLayout = view.findViewById(R.id.calendar_week_6);
-        TextView currentDate = view.findViewById(R.id.current_date);
-        TextView currentMonth = view.findViewById(R.id.current_month);
+        weekOneLayout = calendarView.findViewById(R.id.calendar_week_1);
+        weekTwoLayout = calendarView.findViewById(R.id.calendar_week_2);
+        weekThreeLayout = calendarView.findViewById(R.id.calendar_week_3);
+        weekFourLayout = calendarView.findViewById(R.id.calendar_week_4);
+        weekFiveLayout = calendarView.findViewById(R.id.calendar_week_5);
+        weekSixLayout = calendarView.findViewById(R.id.calendar_week_6);
+        currentDate = calendarView.findViewById(R.id.current_date);
 
         currentDateDay = chosenDateDay = calendar.get(java.util.Calendar.DAY_OF_MONTH);
 
@@ -93,17 +97,51 @@ public class Calendar extends LinearLayout {
             currentDateYear = chosenDateYear = calendar.get(java.util.Calendar.YEAR);
         }
 
-        String day = "" + currentDateDay;
-        currentDate.setText(day);
-        String monthAndYear = " " + FR_MONTH_NAMES[currentDateMonth] + " " + currentDateYear;
-        currentMonth.setText(monthAndYear);
+        setCurrentDateText();
 
         initializeDaysWeeks();
+        defaultButtonParams = getdaysLayoutParams();
         addDaysinCalendar(defaultButtonParams, context, metrics);
 
         initCalendarWithDate(chosenDateYear, chosenDateMonth, chosenDateDay);
 
+        addNavigationListener();
 
+
+    }
+
+    private void setCurrentDateText() {
+        Log.d("[CALENDAR]", "month title set");
+        String day = FR_MONTH_NAMES[chosenDateMonth] + " " + chosenDateYear;
+        currentDate.setText(day);
+    }
+
+    private void addNavigationListener() {
+        ImageButton leftBtn = calendarView.findViewById(R.id.chevron_left);
+        ImageButton rightBtn = calendarView.findViewById(R.id.chevron_right);
+
+        addListener(-1, leftBtn);
+        addListener(1, rightBtn);
+    }
+
+    private void addListener(final int i, ImageButton btn) {
+        if (btn != null) {
+            btn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(((chosenDateMonth == java.util.Calendar.DECEMBER) && (i==1)) ||
+                            ((chosenDateMonth == java.util.Calendar.JANUARY) && (i== -1))){
+                        chosenDateYear = chosenDateYear + i;
+                    }
+                    chosenDateMonth = modulo(chosenDateMonth + i, MONTH_NUMBER);
+                    initCalendarWithDate(chosenDateYear, chosenDateMonth, chosenDateDay);
+                    setCurrentDateText();
+                    Log.d("[CALENDAR]", "New chosen month : " + chosenDateMonth);
+                }
+            });
+        }
+        else
+            Log.d("[CALENDAR]", "onClickListener can't be set, because button is null");
     }
 
     private void initializeDaysWeeks() {
@@ -141,13 +179,14 @@ public class Calendar extends LinearLayout {
         int dayNumber = 1;
         int daysLeftInFirstWeek;
         int indexOfDayAfterLastDayOfMonth;
-        int indexOfFirstDayOfMonth = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % WEEK_SIZE;
-
+        int indexOfFirstDayOfMonth = modulo((firstDayOfCurrentMonth - this.firstDayOfTheWeek), WEEK_SIZE);
+        Log.d("[CALENDAR]", "-1 modulo 7 " + modulo(-1, 7));
         if (firstDayOfCurrentMonth != this.firstDayOfTheWeek) {
-            daysLeftInFirstWeek = (firstDayOfCurrentMonth - this.firstDayOfTheWeek) % WEEK_SIZE;
+            daysLeftInFirstWeek = indexOfFirstDayOfMonth;
             indexOfDayAfterLastDayOfMonth = daysLeftInFirstWeek + daysInCurrentMonth;
             Log.d("[CALENDAR]", "First day of the week isn't monday");
-            Log.d("[CALENDAR]", "indices of days : from " + indexOfFirstDayOfMonth + " to " + indexOfFirstDayOfMonth + daysInCurrentMonth % WEEK_SIZE);
+            Log.d("[CALENDAR]", "indices of days : from " + indexOfFirstDayOfMonth +
+                    " to " + (indexOfFirstDayOfMonth + daysInCurrentMonth - 1));
             for (int i = indexOfFirstDayOfMonth; i < indexOfFirstDayOfMonth + daysInCurrentMonth; ++i) {
                 if (currentDateMonth == chosenDateMonth
                         && currentDateYear == chosenDateYear
@@ -211,6 +250,7 @@ public class Calendar extends LinearLayout {
             calendar.set(year - 1, 11, 1);
         int daysInPreviousMonth = calendar.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 
+        //Formatter les jours avant le début du mois
         for (int i = daysLeftInFirstWeek - 1; i >= 0; --i) {
             int[] dateArr = new int[3];
 
@@ -237,6 +277,7 @@ public class Calendar extends LinearLayout {
             }
 
             days[i].setTag(dateArr);
+            days[i].setTextColor(Color.parseColor(CUSTOM_GREY));
             days[i].setText(String.valueOf(daysInPreviousMonth--));
             days[i].setOnClickListener(new OnClickListener() {
                 @Override
@@ -246,6 +287,7 @@ public class Calendar extends LinearLayout {
             });
         }
 
+        //Formatter les jours après la fin du mois
         int nextMonthDaysCounter = 1;
         for (int i = indexOfDayAfterLastDayOfMonth; i < days.length; ++i) {
             int[] dateArr = new int[3];
@@ -288,6 +330,21 @@ public class Calendar extends LinearLayout {
         }
 
         calendar.set(chosenDateYear, chosenDateMonth, chosenDateDay);
+    }
+
+    /**
+     * Deal with negative numbers, so that the return will always be between 0 and b-1
+     * (b-1) included
+     * @param a
+     * @param b
+     * @return a%b
+     */
+    private int modulo(int a, int b) {
+        int ret = a % b;
+        if (ret < 0 ){
+            ret = ret + b;
+        }
+        return ret;
     }
 
     public void onDayClick(View view) {
@@ -359,6 +416,14 @@ public class Calendar extends LinearLayout {
             }
         }
     }
+
+    private LayoutParams getdaysLayoutParams() {
+        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        buttonParams.weight = 1;
+        return buttonParams;
+    }
 /*
     private void setDayOnTouchListener(Button day) {
         OnTouchListener listener = new OnTouchListener() {
@@ -374,10 +439,13 @@ public class Calendar extends LinearLayout {
             });
 
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public boolean onTouch(View calendarView, MotionEvent motionEvent) {
                 return false;
             }
         };
         day.setOnTouchListener(listener);
     }*/
+
+
+
 }
