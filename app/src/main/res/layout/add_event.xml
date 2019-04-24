@@ -23,28 +23,32 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
             android:divider="@color/colorDashBackground"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
 
             <EditText
                 android:id="@+id/editTextTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/title_add_event"
                 android:inputType="textPersonName"
-                android:autofillHints="" tools:targetApi="o" />
+                tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/add_event_description"
                 android:inputType="textMultiLine"
                 android:paddingBottom="20dp"
-                android:autofillHints=""
-                android:layout_marginEnd="10dp" tools:targetApi="o" />
+                tools:targetApi="o" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,10 +59,10 @@
                     android:id="@+id/textViewEventType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/add_event_type"
-                    android:textSize="18sp"
-                    android:layout_marginEnd="10dp" />
+                    android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/spinner_type_event"
@@ -72,10 +76,11 @@
                 android:id="@+id/editTextPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/add_event_place"
                 android:inputType="textPersonName"
-                android:autofillHints="" tools:targetApi="o" />
+                tools:targetApi="o" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,10 +91,10 @@
                     android:id="@+id/textViewDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/add_event_date"
-                    android:textSize="18sp"
-                    android:layout_marginEnd="10dp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/editTextDate"

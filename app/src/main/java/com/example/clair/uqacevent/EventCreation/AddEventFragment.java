@@ -56,6 +56,7 @@ public class AddEventFragment extends Fragment {
         database = FirebaseDatabase.getInstance().getReference();
 
         activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
 
         ETTitle = activity.findViewById(R.id.editTextTitle);
         ETDescription = activity.findViewById(R.id.editTextDescription);
