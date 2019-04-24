@@ -1,25 +1,39 @@
 package com.example.clair.uqacevent.EventCreation;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.clair.uqacevent.Calendar.Event;
 
+import com.example.clair.uqacevent.Profile.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import java.util.Objects;
 
@@ -32,6 +46,9 @@ public class AddEventFragment extends Fragment {
     private EditText ETPlace;
     private Spinner sTypeEvent;
     Activity activity;
+
+    private Calendar myCalendar;
+    DatePickerDialog.OnDateSetListener date;
 
 
     @Nullable
@@ -49,16 +66,51 @@ public class AddEventFragment extends Fragment {
         ETTitle = activity.findViewById(R.id.editTextTitle);
         ETDescription = activity.findViewById(R.id.editTextDescription);
         ETDate = activity.findViewById(R.id.editTextDate);
+        ETDate.setOnClickListener(datePickerListener);
         ETPlace = activity.findViewById(R.id.editTextPlace);
         sTypeEvent = activity.findViewById(R.id.spinner_type_event);
         Button bAddEvent = activity.findViewById(R.id.button_add_event);
         bAddEvent.setOnClickListener(addEventListener);
 
-        /*if(checkFields().equals("")){
-            bAddEvent.setEnabled(true);
-        }*/ //ajouter listener sur les champs?
+        myCalendar = Calendar.getInstance();
+
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateText();
+            }
+        };
+        updateText();
     }
 
+
+    private void updateText() {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        ETDate.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    //open a dialog to pick a date
+    private View.OnClickListener datePickerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new DatePickerDialog(getActivity(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        }
+    };
+
+
+    public String getCurrentTime() {
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("'le' dd/MM/yyyy 'à' HH:mm", Locale.CANADA);
+
+        return sdf.format(currentDate);
+    }
 
     private View.OnClickListener addEventListener = new View.OnClickListener(){
 
@@ -74,8 +126,9 @@ public class AddEventFragment extends Fragment {
                 String typeEvent = sTypeEvent.getSelectedItem().toString();
                 String organizer = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
                 String organizerId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                String postingTime = getCurrentTime();
 
-                Event newEvent = new Event(date, description, place, title, organizer, typeEvent, organizerId);
+                Event newEvent = new Event(date, description, place, title, User.getCurrentUser().getName(), typeEvent, organizerId, postingTime);
 
                 DatabaseReference eventsRef = database.child("Events");
                 DatabaseReference newEventRef = eventsRef.push();

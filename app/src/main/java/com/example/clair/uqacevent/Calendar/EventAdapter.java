@@ -28,17 +28,23 @@ public class EventAdapter extends BaseAdapter{
         String organizer = e.getOrganizer();
         String place = e.getPlace();
         String title = e.getTitle();
+        String postingTime = e.getPostingTime();
         if (view ==null){
             view = LayoutInflater.from(context).inflate(R.layout.event, viewGroup, false);
         }
 
         TextView titleView = view.findViewById(R.id.news_title);
         TextView descrView = view.findViewById(R.id.news_description);
-        TextView dateView = view.findViewById(R.id.news_time);
-        //TextView titlePlace = calendarView.findViewById(R.id.place);
+        TextView dateView = view.findViewById(R.id.news_date);
+        TextView placeView = view.findViewById(R.id.news_place);
+        TextView organizerView = view.findViewById(R.id.news_organizer);
+        TextView postingTimeView = view.findViewById(R.id.news_time);
         titleView.setText(title);
         descrView.setText(description);
         dateView.setText(date);
+        placeView.setText(place);
+        organizerView.setText(organizer);
+        postingTimeView.setText(postingTime);
 
         return view;
     }

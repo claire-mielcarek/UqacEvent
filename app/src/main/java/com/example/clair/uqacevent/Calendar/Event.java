@@ -8,8 +8,9 @@ public class Event {
     private String organizer;
     private String type;
     private String organizerId;
+    private String postingTime;
 
-    public Event(String date, String description, String place, String title, String organizer, String type, String organizerId) {
+    public Event(String date, String description, String place, String title, String organizer, String type, String organizerId, String postingTime) {
         this.date = date;
         this.description = description;
         this.place = place;
@@ -17,6 +18,7 @@ public class Event {
         this.organizer = organizer;
         this.type = type;
         this.organizerId = organizerId;
+        this.postingTime = postingTime;
     }
 
     public String getDate() {
@@ -45,5 +47,8 @@ public class Event {
 
     public String getOrganizerId() {
         return organizerId;
+    }
+    public String getPostingTime() {
+        return postingTime;
     }
 }
