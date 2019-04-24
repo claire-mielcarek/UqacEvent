@@ -168,7 +168,8 @@ public class Inscription extends Fragment {
                             public void OnSuccess() {
                                 Fragment f = new ProfileFragment();
                                 ((MainActivity) activity).openFragment(f, getString(R.string.title_profile));
-                                if (user.isPublicAccount())
+                                Log.d("[INSCRIPTION]", "" + user);
+                                if (accountIsPublic.equals("true"))
                                     ((MainActivity) activity).addCreationMenuItem();
                             }
 

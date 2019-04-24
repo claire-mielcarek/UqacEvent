@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     boolean isAlreadyInstantiated;
     private FirebaseUser firebaseUser;
+    User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +45,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        User user;
         Log.d("[HOME_ACTIVITY]", "onStart");
 
         if (!this.isAlreadyInstantiated) {
             Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
-            createMenu();
+            //createMenu();
 
+            //Log.d("[MAIN_ACTIVITY]", "firebaseUser  : " + firebaseUser.toString());
+            //Log.d("[MAIN_ACTIVITY]", "our user : " + user);
             // load user data if connected
-            if (firebaseUser != null) {
+            if (firebaseUser != null && user == null) {
                 // get user data
                 user = User.InstantiateUser();
                 user.attachUserToFirebase(true, new IResultConnectUser() {
                     @Override
                     public void OnSuccess() {
+                        Log.d("[MAINT_ACTIVITY]", "user attached to database");
+                        createMenu();
                     }
 
                     @Override
@@ -66,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("DatabaseChange", "Failed to read values.");
                     }
                 });
+            }
+            else{
+                createMenu();
             }
         }
 
@@ -79,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
      * Si b est vrai, on ajoute aussi l'item de création d'events
      */
     private void createMenu() {
+        Log.d("[MAIN_ACTIVITY]", "createMenu()");
+        //Log.d("[MAIN_ACTIVITY]", User.getCurrentUser().isPublicAccount() + "");
         navigation.getMenu().removeItem(R.id.navigation_dashboard);
         navigation.getMenu().removeItem(R.id.navigation_calendar);
         navigation.getMenu().removeItem(R.id.navigation_creation);
@@ -87,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.getMenu().add(Menu.NONE, R.id.navigation_calendar, 2, R.string.title_calendar).setIcon(R.drawable.ic_date_range_black_24dp);
         if ((firebaseUser != null) && User.getCurrentUser() != null && User.getCurrentUser().isPublicAccount()) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
+            Log.d("[MAIN_ACTIVITY]", "menu item + added");
         }
         navigation.getMenu().add(Menu.NONE, R.id.navigation_profile, 4, R.string.title_profile).setIcon(R.drawable.ic_person_black_24dp);
     }
