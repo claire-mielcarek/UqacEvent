@@ -1,6 +1,6 @@
 package com.example.clair.uqacevent.EventCreation;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,17 +21,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class AddEventFragment extends Fragment {
-    private FirebaseAuth auth;
     private DatabaseReference database;
-    private DatabaseReference newEventRef;
 
     private EditText ETTitle;
     private EditText ETDescription;
     private EditText ETDate;
     private EditText ETPlace;
     private Spinner sTypeEvent;
-    private Button bAddEvent;
+    Activity activity;
 
 
     @Nullable
@@ -42,15 +42,16 @@ public class AddEventFragment extends Fragment {
 
     public void onStart(){
         super.onStart();
-        auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
-        ETTitle = getActivity().findViewById(R.id.editTextTitle);
-        ETDescription = getActivity().findViewById(R.id.editTextDescription);
-        ETDate = getActivity().findViewById(R.id.editTextDate);
-        ETPlace = getActivity().findViewById(R.id.editTextPlace);
-        sTypeEvent = getActivity().findViewById(R.id.spinner_type_event);
-        bAddEvent = getActivity().findViewById(R.id.button_add_event);
+        activity = Objects.requireNonNull(getActivity());
+
+        ETTitle = activity.findViewById(R.id.editTextTitle);
+        ETDescription = activity.findViewById(R.id.editTextDescription);
+        ETDate = activity.findViewById(R.id.editTextDate);
+        ETPlace = activity.findViewById(R.id.editTextPlace);
+        sTypeEvent = activity.findViewById(R.id.spinner_type_event);
+        Button bAddEvent = activity.findViewById(R.id.button_add_event);
         bAddEvent.setOnClickListener(addEventListener);
 
         /*if(checkFields().equals("")){
@@ -71,13 +72,13 @@ public class AddEventFragment extends Fragment {
                 String date = ETDate.getText().toString();
                 String place = ETPlace.getText().toString();
                 String typeEvent = sTypeEvent.getSelectedItem().toString();
-                String organizer = auth.getInstance().getCurrentUser().getDisplayName();
-                String organizerId = auth.getInstance().getCurrentUser().getUid();
+                String organizer = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                String organizerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 Event newEvent = new Event(date, description, place, title, organizer, typeEvent, organizerId);
 
                 DatabaseReference eventsRef = database.child("Events");
-                newEventRef = eventsRef.push();
+                DatabaseReference newEventRef = eventsRef.push();
                 newEventRef.setValue(newEvent,new DatabaseReference.CompletionListener(){
 
                     @Override

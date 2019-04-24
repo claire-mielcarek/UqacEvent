@@ -10,20 +10,22 @@ import android.view.ViewGroup;
 
 import com.example.clair.uqacevent.R;
 
+import java.util.Objects;
+
 public class CalendarFragment extends Fragment {
     ViewGroup calendar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        Objects.requireNonNull(getActivity()).setTitle(getTag());
         return inflater.inflate(R.layout.calendar_fragment, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ViewGroup calendar_container = getActivity().findViewById(R.id.calendar_container);
+        ViewGroup calendar_container = Objects.requireNonNull(getActivity()).findViewById(R.id.calendar_container);
         calendar = new Calendar(getContext());
         calendar_container.addView(calendar);
 

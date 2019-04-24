@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DayFragment extends Fragment {
     int day;
@@ -33,7 +34,7 @@ public class DayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        Objects.requireNonNull(getActivity()).setTitle(getTag());
         return inflater.inflate(R.layout.calendar_day, container, false);
     }
 
@@ -51,7 +52,7 @@ public class DayFragment extends Fragment {
         data = FirebaseDatabase.getInstance().getReference();
 
         listAdapter = new EventAdapter(getActivity(), events);
-        list = getActivity().findViewById(R.id.calendar_list_events);
+        list = Objects.requireNonNull(getActivity()).findViewById(R.id.calendar_list_events);
         getActivity().setTitle(day + " " + Calendar.FR_MONTH_NAMES[month] + " " + year);
         addListEventListener();
         if (list != null) {

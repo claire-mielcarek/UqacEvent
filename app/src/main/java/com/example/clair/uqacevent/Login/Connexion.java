@@ -1,5 +1,6 @@
 package com.example.clair.uqacevent.Login;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,15 +20,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.clair.uqacevent.R;
 
-public class Connexion extends Fragment {
+import java.util.Objects;
 
+public class Connexion extends Fragment {
     private FirebaseAuth auth;
+    Activity activity;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
         return inflater.inflate(R.layout.login_connexion, container, false);
     }
 
@@ -35,14 +39,14 @@ public class Connexion extends Fragment {
     public void onStart() {
         super.onStart();
         auth = FirebaseAuth.getInstance();
-        View v = getActivity().findViewById(R.id.inscription_button);
+        View v = activity.findViewById(R.id.inscription_button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 inscription();
             }
         });
-        v = getActivity().findViewById(R.id.connexion_button);
+        v = activity.findViewById(R.id.connexion_button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,8 +57,9 @@ public class Connexion extends Fragment {
 
     public void connexionWithMail() {
         // recupere les edit text contenant les donnees
-        final EditText edit_mail = ( getView().findViewById(R.id.mail));
-        final EditText edit_mdp = ( getView().findViewById(R.id.mdp));
+        View v = Objects.requireNonNull(getView());
+        final EditText edit_mail = (v .findViewById(R.id.mail));
+        final EditText edit_mdp = (v.findViewById(R.id.mdp));
 
         //recupere les donnees de l'utilisateur
         String mail = edit_mail.getText().toString();
@@ -88,7 +93,7 @@ public class Connexion extends Fragment {
         // rediriger vers l'activité d'inscription
         //getActivity().getActionBar().setTitle(R.string.inscription);
         Fragment f = new Inscription();
-        ((MainActivity) getActivity()).openFragment(f, getString(R.string.inscription));
+        ((MainActivity) activity).openFragment(f, getString(R.string.inscription));
     }
 
     public void LoadDataAndStartActivity() {
@@ -102,8 +107,9 @@ public class Connexion extends Fragment {
                 // start Profile Activity
                 //getActivity().getActionBar().setTitle(R.string.title_profile);
                 Fragment f = new ProfileFragment();
-                ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_profile));
-                ((MainActivity) getActivity()).addCreationMenuItem();
+                ((MainActivity) activity).openFragment(f, getString(R.string.title_profile));
+                if (user.isPublicAccount())
+                    ((MainActivity) activity).addCreationMenuItem();
                 Log.d("[CONNEXION]", "fragment must have changed");
             }
             @Override

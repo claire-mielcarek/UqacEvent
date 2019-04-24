@@ -43,6 +43,7 @@ public class User {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser fireUser = auth.getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();
+        assert fireUser != null;
         this.uid = fireUser.getUid();
         first = true;
     }

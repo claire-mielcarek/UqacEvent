@@ -1,7 +1,7 @@
 package com.example.clair.uqacevent.Dashboard;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,38 +12,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.clair.uqacevent.Calendar.Event;
 import com.example.clair.uqacevent.Calendar.EventAdapter;
-import com.example.clair.uqacevent.Login.Connexion;
 import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.Profile.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
-    private FirebaseAuth auth;
-    private FirebaseUser firebaseUser;
-    private User user;
+    protected FirebaseAuth auth;
     DatabaseReference data;
     private DatabaseReference eventsRef;
     EventAdapter eventAdapter;
     ListView list;
     ArrayList<String> filteredOrganizersIds;
+    Activity activity;
 
 
     ArrayList<Event> events;
@@ -52,7 +46,8 @@ public class DashboardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
         return inflater.inflate(R.layout.dashboard, container, false);
     }
 
@@ -95,7 +90,7 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     }
 
     @Override
@@ -104,7 +99,6 @@ public class DashboardFragment extends Fragment {
 
         setHasOptionsMenu(true);
         auth = FirebaseAuth.getInstance();
-        firebaseUser = auth.getCurrentUser();
         data = FirebaseDatabase.getInstance().getReference();
         eventsRef = data.child("Events").getRef();
         events = new ArrayList<>();
@@ -115,7 +109,7 @@ public class DashboardFragment extends Fragment {
         }
         Log.d("[DASHBOARD]", filteredOrganizersIds.toString());
         eventAdapter = new EventAdapter(getActivity(), events);
-        list = getActivity().findViewById(R.id.list_events_dashboard);
+        list = activity.findViewById(R.id.list_events_dashboard);
         displayListEvents();
 
         list.setAdapter(eventAdapter);
@@ -134,7 +128,7 @@ public class DashboardFragment extends Fragment {
         switch (id) {
             case R.id.action_filter:
                 Fragment f = new FilterFragment();
-                ((MainActivity) getActivity()).openFragment(f, getString(R.string.filters));
+                ((MainActivity) activity).openFragment(f, getString(R.string.filters));
                 return true;
 
             default:

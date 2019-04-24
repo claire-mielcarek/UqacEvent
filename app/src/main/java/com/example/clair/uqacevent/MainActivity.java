@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
 
-            createMenu(firebaseUser != null);
             // load user data if connected
             if (firebaseUser != null) {
                 // get user data
@@ -71,23 +70,21 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment f = new DashboardFragment();
         openFragment(f, getString(R.string.title_dashboard));
-        invalidateOptionsMenu();
+        createMenu();
     }
 
     /**
      * Ajoute les items du menu de navigation
      * Si b est vrai, on ajoute aussi l'item de création d'events
-     *
-     * @param b boolean
      */
-    private void createMenu(boolean b) {
+    private void createMenu() {
         navigation.getMenu().removeItem(R.id.navigation_dashboard);
         navigation.getMenu().removeItem(R.id.navigation_calendar);
         navigation.getMenu().removeItem(R.id.navigation_creation);
         navigation.getMenu().removeItem(R.id.navigation_profile);
         navigation.getMenu().add(Menu.NONE, R.id.navigation_dashboard, 1, R.string.title_dashboard).setIcon(R.drawable.ic_dashboard_black_24dp);
         navigation.getMenu().add(Menu.NONE, R.id.navigation_calendar, 2, R.string.title_calendar).setIcon(R.drawable.ic_date_range_black_24dp);
-        if (b) {
+        if ((firebaseUser != null) && User.getCurrentUser().isPublicAccount()) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
         }
         navigation.getMenu().add(Menu.NONE, R.id.navigation_profile, 4, R.string.title_profile).setIcon(R.drawable.ic_person_black_24dp);

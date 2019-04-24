@@ -1,5 +1,6 @@
 package com.example.clair.uqacevent.Login;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 
 import com.example.clair.uqacevent.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -29,9 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class Inscription extends Fragment {
     private FirebaseAuth auth;
     private DatabaseReference database;
+    Activity activity;
     /*
     private Context context;
 */
@@ -45,7 +50,8 @@ public class Inscription extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
         return inflater.inflate(R.layout.login_inscription, container, false);
     }
 
@@ -54,7 +60,7 @@ public class Inscription extends Fragment {
         super.onStart();
         auth = FirebaseAuth.getInstance();// recupere l'objet firebase pour l'authantification et une reference vers la database
         database = FirebaseDatabase.getInstance().getReference();
-        View v = getActivity().findViewById(R.id.inscription);
+        View v = activity.findViewById(R.id.inscription);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,17 +69,17 @@ public class Inscription extends Fragment {
         });
     }
 
-    public void try_inscription(){
+    public void try_inscription() {
         int code = -1;
         first = true;
         probleme = false;
 
-        mail = getActivity().findViewById(R.id.mail);
-        mdp = getActivity().findViewById(R.id.mdp);
-        mdp_confirm = getActivity().findViewById(R.id.mdp_confirm);
-        nom = getActivity().findViewById(R.id.nom);
+        mail = activity.findViewById(R.id.mail);
+        mdp = activity.findViewById(R.id.mdp);
+        mdp_confirm = activity.findViewById(R.id.mdp_confirm);
+        nom = activity.findViewById(R.id.nom);
 
-        final String typeAccount = ((RadioButton) getActivity().findViewById(((RadioGroup) getActivity().findViewById(R.id.type_account)).getCheckedRadioButtonId())).getText().toString();
+        final String typeAccount = ((RadioButton) activity.findViewById(((RadioGroup) activity.findViewById(R.id.type_account)).getCheckedRadioButtonId())).getText().toString();
         final String accountIsPublic = Boolean.toString(typeAccount.equals(getString(R.string.public_account)));
         final String mail_value = mail.getText().toString();
         final String mdp_value = mdp.getText().toString();
@@ -83,7 +89,7 @@ public class Inscription extends Fragment {
 
 
         if (!mail_value.equals("") && !mdp_value.equals("") && !mdp_confirm_value.equals("") && !nom_value.equals("") &&
-                mdp_value.equals(mdp_confirm_value)){
+                mdp_value.equals(mdp_confirm_value)) {
 
             // check if first name and last name already exist
 
@@ -115,14 +121,14 @@ public class Inscription extends Fragment {
             });
 
 
-        }else{
+        } else {
             // definie le code d'erreur
             if (nom_value.equals(""))
                 code = 5;
             else if (mail_value.equals(""))
                 code = 1;
             else if (mdp_value.equals(""))
-                code  = 2;
+                code = 2;
             else if (mdp_confirm_value.equals(""))
                 code = 3;
             else if (!mdp_value.equals(mdp_confirm_value))
@@ -134,14 +140,14 @@ public class Inscription extends Fragment {
     }
 
 
-    private void completeSignIn(String mail, String mdp, final String date_membre, final String nom, final String accountIsPublic){
+    private void completeSignIn(String mail, String mdp, final String date_membre, final String nom, final String accountIsPublic) {
 
         auth.createUserWithEmailAndPassword(mail, mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 FirebaseUser firebaseUser;
 
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     // enregistrer les informations dans la base de donnees
                     firebaseUser = auth.getCurrentUser();
                     Log.d("[INSCRIPTION]", "current user : " + firebaseUser);
@@ -156,13 +162,14 @@ public class Inscription extends Fragment {
 
                         // get data of user from firebase
 
-                        User user = User.InstantiateUser();
+                        final User user = User.InstantiateUser();
                         user.attachUserToFirebase(true, new IResultConnectUser() {
                             @Override
                             public void OnSuccess() {
                                 Fragment f = new ProfileFragment();
-                                ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_profile));
-                                ((MainActivity) getActivity()).addCreationMenuItem();
+                                ((MainActivity) activity).openFragment(f, getString(R.string.title_profile));
+                                if (user.isPublicAccount())
+                                    ((MainActivity) activity).addCreationMenuItem();
                             }
 
                             @Override
@@ -171,7 +178,7 @@ public class Inscription extends Fragment {
                             }
                         });
                     }
-                }else{
+                } else {
                     Log.d("InscriptionMail", String.valueOf(task.getException()));    // probleme lors de la creation du compte
                     ErrorDetected(0);
                 }
@@ -179,11 +186,11 @@ public class Inscription extends Fragment {
         });
     }
 
-    public void ErrorDetected(int code){
+    public void ErrorDetected(int code) {
         String message;
 
         // definie un message suivant le code recu
-        if (code == 0){
+        if (code == 0) {
             message = "Votre inscription a echoué. L'adresse mail est peut-être déjà utilisé.";
             mail.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
@@ -191,34 +198,34 @@ public class Inscription extends Fragment {
             mail.getBackground().setAlpha(50);
             mdp.getBackground().setAlpha(50);
             mdp_confirm.getBackground().setAlpha(50);
-        }else if (code == 1) {
+        } else if (code == 1) {
             message = "L'adresse mail est obligatoire pour s'inscrire.";
             mail.setBackgroundResource(R.drawable.error_edit_text_bg);
             mail.getBackground().setAlpha(50);
-        }else if (code == 2) {
+        } else if (code == 2) {
             message = "Le mot de passe est obligatoire pour s'inscrire.";
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.getBackground().setAlpha(50);
-        }else if (code == 3) {
+        } else if (code == 3) {
             message = "La confirmation du mot de passe est obligatoire pour s'inscrire.";
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp_confirm.getBackground().setAlpha(50);
 
-        }else if (code == 5) {
+        } else if (code == 5) {
             message = "Le nom est obligatoire pour s'inscrire.";
             nom.setBackgroundResource(R.drawable.error_edit_text_bg);
             nom.getBackground().setAlpha(50);
-        }else if (code == 7) {
+        } else if (code == 7) {
             message = "Les mots de passes ne sont pas identiques. Veuillez réessayer.";
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.getBackground().setAlpha(50);
             mdp_confirm.getBackground().setAlpha(50);
-        }else if (code == 8){
+        } else if (code == 8) {
             message = "Le nom et prenom existe déjà.";
             nom.setBackgroundResource(R.drawable.error_edit_text_bg);
             nom.getBackground().setAlpha(50);
-        }else{
+        } else {
             message = "Une erreur inconnue a été rencontré. Veuillez réessayer.";
         }
 

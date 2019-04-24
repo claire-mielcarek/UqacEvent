@@ -1,5 +1,6 @@
 package com.example.clair.uqacevent.Dashboard;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,27 +12,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.Profile.User;
 import com.example.clair.uqacevent.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FilterFragment extends Fragment {
     private DatabaseReference data;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
+    Activity activity;
 
     FilterAdapter listAdapter;
     ArrayList<String> organizers;
@@ -42,7 +39,8 @@ public class FilterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getTag());
+        activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
         return inflater.inflate(R.layout.dashboard_filter, container, false);
     }
 
@@ -52,15 +50,13 @@ public class FilterFragment extends Fragment {
         
         setHasOptionsMenu(true);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
         data = FirebaseDatabase.getInstance().getReference();
 
         organizers = new ArrayList<>();
         organizersIds = new ArrayList<>();
         filters = new ArrayList<>();
         addOrganizersListener();
-        ListView list = getActivity().findViewById(R.id.filter_list);
+        ListView list = activity.findViewById(R.id.filter_list);
         listAdapter = new FilterAdapter(getContext(), organizers, filters);
         list.setAdapter(listAdapter);
     }
@@ -77,7 +73,7 @@ public class FilterFragment extends Fragment {
                 }
                 Log.d("[FILTER]", "already filtred : " + alreadyFiltred );
                 for (DataSnapshot user : groupsData.getChildren()) {
-                    if (!organizersIds.contains(user.getKey()) && user.child("accountIsPublic").getValue().equals("true")) {
+                    if (!organizersIds.contains(user.getKey()) && Objects.equals(user.child("accountIsPublic").getValue(), "true")) {
                         String organizerId = user.getKey();
                         organizersIds.add(organizerId);
                         organizers.add((String) user.child("nom").getValue());
@@ -105,7 +101,7 @@ public class FilterFragment extends Fragment {
             case R.id.action_save:
                 saveFilters();
                 Fragment f = new DashboardFragment();
-                ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_dashboard));
+                ((MainActivity) activity).openFragment(f, getString(R.string.title_dashboard));
                 return true;
 
             default:
@@ -114,7 +110,7 @@ public class FilterFragment extends Fragment {
     }
 
     private void saveFilters() {
-        ArrayList<String> filteredOrganizersIds = new ArrayList();
+        ArrayList<String> filteredOrganizersIds = new ArrayList<>();
         for (int i =0 ; i< organizersIds.size(); i++){
             if (filters.get(i)){
                 filteredOrganizersIds.add(organizersIds.get(i));

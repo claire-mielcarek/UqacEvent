@@ -1,5 +1,6 @@
 package com.example.clair.uqacevent.Profile;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,10 +25,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class ProfileFragment extends Fragment {
     private FirebaseAuth auth;
     private User user;
     DatabaseReference data;
+    Activity activity;
 
     TextView nom;
     TextView email;
@@ -47,7 +51,8 @@ public class ProfileFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        getActivity().setTitle(getTag());
+        activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(getTag());
         user = User.getCurrentUser();
         Log.d("[PROFILE]", "user : " + user);
     }
@@ -58,19 +63,19 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         data = FirebaseDatabase.getInstance().getReference();
 
-        nom = getActivity().findViewById(R.id.username);
-        email = getActivity().findViewById(R.id.profile_email);
-        descriptionEdit = getActivity().findViewById(R.id.profile_description);
-        contactEdit = getActivity().findViewById(R.id.profile_contact);
-        saveButton = getActivity().findViewById(R.id.profile_sauvegarder);
+        nom = activity.findViewById(R.id.username);
+        email = activity.findViewById(R.id.profile_email);
+        descriptionEdit = activity.findViewById(R.id.profile_description);
+        contactEdit = activity.findViewById(R.id.profile_contact);
+        saveButton = activity.findViewById(R.id.profile_sauvegarder);
         fillDataFromUser();
 
 
         if(!publicAccount){
             Log.d("[PROFILE]", "Set unused field invisible because publicAccount is : " + publicAccount);
-            LinearLayout descritpionContainer = getActivity().findViewById(R.id.profile_description_container);
+            LinearLayout descritpionContainer = activity.findViewById(R.id.profile_description_container);
             descritpionContainer.setVisibility(View.INVISIBLE);
-            LinearLayout contactContainer = getActivity().findViewById(R.id.profile_contact_container);
+            LinearLayout contactContainer = activity.findViewById(R.id.profile_contact_container);
             contactContainer.setVisibility(View.INVISIBLE);
             saveButton.setVisibility(View.INVISIBLE);
         }
@@ -91,8 +96,8 @@ public class ProfileFragment extends Fragment {
             case R.id.action_logout:
                 auth.signOut();
                 Fragment f = new Connexion();
-                ((MainActivity) getActivity()).openFragment(f, getString(R.string.connexion));
-                ((MainActivity) getActivity()).deleteCreationMenuItem();
+                ((MainActivity) activity).openFragment(f, getString(R.string.connexion));
+                ((MainActivity) activity).deleteCreationMenuItem();
                 return true;
 
             default:
