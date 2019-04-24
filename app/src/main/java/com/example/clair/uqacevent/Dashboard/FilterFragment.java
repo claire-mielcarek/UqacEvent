@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.clair.uqacevent.MainActivity;
+import com.example.clair.uqacevent.Profile.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FilterFragment extends Fragment {
@@ -29,9 +33,10 @@ public class FilterFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
-    ArrayAdapter<String> listAdapter;
+    FilterAdapter listAdapter;
     ArrayList<String> organizers;
     ArrayList<String> organizersIds;
+    ArrayList<Boolean> filters;
     ValueEventListener organizersListener;
 
     @Nullable
@@ -53,11 +58,10 @@ public class FilterFragment extends Fragment {
 
         organizers = new ArrayList<>();
         organizersIds = new ArrayList<>();
-        organizers.add("Coucou");
-        organizers.add("Personne qui fait des soirées soirées  soirées soirées soirées");
+        filters = new ArrayList<>();
         addOrganizersListener();
         ListView list = getActivity().findViewById(R.id.filter_list);
-        listAdapter = new ArrayAdapter<String>(getContext(), R.layout.dashboard_filter_item, R.id.filter_list_text, organizers);
+        listAdapter = new FilterAdapter(getContext(), organizers, filters);
         list.setAdapter(listAdapter);
     }
 
@@ -66,17 +70,21 @@ public class FilterFragment extends Fragment {
         organizersListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Log.d("[GROUP_LISTENER]", "data change");
                 DataSnapshot groupsData = dataSnapshot.child("Users");
-                boolean isUserGroup = false;
+                ArrayList<String> alreadyFiltred = new ArrayList<>();
+                if (User.getCurrentUser() != null) {
+                    alreadyFiltred = User.getCurrentUser().getFilteredOrganizersIds();
+                }
+                Log.d("[FILTER]", "already filtred : " + alreadyFiltred );
                 for (DataSnapshot user : groupsData.getChildren()) {
                     if (!organizersIds.contains(user.getKey()) && user.child("accountIsPublic").getValue().equals("true")) {
-                        organizersIds.add(user.getKey());
+                        String organizerId = user.getKey();
+                        organizersIds.add(organizerId);
                         organizers.add((String) user.child("nom").getValue());
+                        filters.add(alreadyFiltred.contains(organizerId));
                     }
                 }
+                Log.d("[FILTER]", "etat initial des checkboxes : " + filters);
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -94,7 +102,7 @@ public class FilterFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.action_filter:
+            case R.id.action_save:
                 saveFilters();
                 Fragment f = new DashboardFragment();
                 ((MainActivity) getActivity()).openFragment(f, getString(R.string.title_dashboard));
@@ -106,5 +114,21 @@ public class FilterFragment extends Fragment {
     }
 
     private void saveFilters() {
+        ArrayList<String> filteredOrganizersIds = new ArrayList();
+        for (int i =0 ; i< organizersIds.size(); i++){
+            if (filters.get(i)){
+                filteredOrganizersIds.add(organizersIds.get(i));
+            }
+        }
+        if (User.getCurrentUser() != null) {
+            User.getCurrentUser().setFilteredOrganizersIds(filteredOrganizersIds);
+        }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

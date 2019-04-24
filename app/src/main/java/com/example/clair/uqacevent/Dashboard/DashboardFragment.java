@@ -43,6 +43,7 @@ public class DashboardFragment extends Fragment {
     private DatabaseReference eventsRef;
     EventAdapter eventAdapter;
     ListView list;
+    ArrayList<String> filteredOrganizersIds;
 
 
     ArrayList<Event> events;
@@ -56,12 +57,12 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    public void displayListEvents(){
+    public void displayListEvents() {
         eventsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for(DataSnapshot event: dataSnapshot.getChildren()) {
+                    for (DataSnapshot event : dataSnapshot.getChildren()) {
                         String newsTitle = (String) event.child("title").getValue();
                         String newsDescription = (String) event.child("description").getValue();
                         String newsDate = (String) event.child("date").getValue();
@@ -71,9 +72,15 @@ public class DashboardFragment extends Fragment {
                         String newsOrganizerId = (String) event.child("organizerId").getValue();
 
                         String key = event.getKey();
-                        if (!eventsKey.contains(key)) {
+                        String organizerkey =(String) event.child("organizerId").getValue();
+                        if (!eventsKey.contains(key)&& !filteredOrganizersIds.contains(organizerkey)) {
                             eventsKey.add(key);
                             events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer, newsType, newsOrganizerId));
+                        }
+                        if(eventsKey.contains(key) && filteredOrganizersIds.contains(organizerkey)){
+                            int id = eventsKey.indexOf(key);
+                            eventsKey.remove(id);
+                            events.remove(id);
                         }
                     }
                 }
@@ -88,11 +95,11 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         setHasOptionsMenu(true);
@@ -102,6 +109,11 @@ public class DashboardFragment extends Fragment {
         eventsRef = data.child("Events").getRef();
         events = new ArrayList<>();
         eventsKey = new ArrayList<>();
+        filteredOrganizersIds = new ArrayList<>();
+        if (User.getCurrentUser() != null) {
+            filteredOrganizersIds = User.getCurrentUser().getFilteredOrganizersIds();
+        }
+        Log.d("[DASHBOARD]", filteredOrganizersIds.toString());
         eventAdapter = new EventAdapter(getActivity(), events);
         list = getActivity().findViewById(R.id.list_events_dashboard);
         displayListEvents();
@@ -119,7 +131,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_filter:
                 Fragment f = new FilterFragment();
                 ((MainActivity) getActivity()).openFragment(f, getString(R.string.filters));

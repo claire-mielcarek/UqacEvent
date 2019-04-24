@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class User {
     private static User user;
 
@@ -21,6 +23,7 @@ public class User {
     private String dateInscription;
     private boolean publicAccount;
     private String contact;
+    private ArrayList<String> filteredOrganizersIds;
     // Firebase reference
     private transient DatabaseReference database;
 
@@ -34,6 +37,8 @@ public class User {
         this.dateInscription = "";
         this.publicAccount = false;
         this.contact = "";
+        filteredOrganizersIds = new ArrayList<>();
+
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser fireUser = auth.getCurrentUser();
@@ -148,5 +153,13 @@ public class User {
                 ", contact='" + contact + '\'' +
                 ", uid='" + uid + '\'' +
                 '}';
+    }
+
+    public void setFilteredOrganizersIds(ArrayList<String> filteredOrganizersIds) {
+        this.filteredOrganizersIds = filteredOrganizersIds;
+    }
+
+    public ArrayList<String> getFilteredOrganizersIds() {
+        return filteredOrganizersIds;
     }
 }

@@ -61,6 +61,5 @@ public class EventAdapter extends BaseAdapter{
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        Log.d("[EVENT_ADAPTER]", "notifyDataSetChanged : " + data.toString());
     }
 }
