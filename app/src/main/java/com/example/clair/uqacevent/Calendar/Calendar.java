@@ -335,8 +335,6 @@ public class Calendar extends LinearLayout {
     /**
      * Deal with negative numbers, so that the return will always be between 0 and b-1
      * (b-1) included
-     * @param a
-     * @param b
      * @return a%b
      */
     private int modulo(int a, int b) {

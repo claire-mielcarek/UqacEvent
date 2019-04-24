@@ -72,8 +72,8 @@ public class AddEventFragment extends Fragment {
                 String date = ETDate.getText().toString();
                 String place = ETPlace.getText().toString();
                 String typeEvent = sTypeEvent.getSelectedItem().toString();
-                String organizer = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                String organizerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String organizer = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+                String organizerId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
                 Event newEvent = new Event(date, description, place, title, organizer, typeEvent, organizerId);
 
