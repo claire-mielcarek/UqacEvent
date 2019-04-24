@@ -191,7 +191,7 @@ public class Inscription extends Fragment {
 
         // definie un message suivant le code recu
         if (code == 0) {
-            message = "Votre inscription a echoué. L'adresse mail est peut-être déjà utilisé.";
+            message = getResources().getString(R.string.sign_up_fail);
             mail.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
@@ -199,34 +199,34 @@ public class Inscription extends Fragment {
             mdp.getBackground().setAlpha(50);
             mdp_confirm.getBackground().setAlpha(50);
         } else if (code == 1) {
-            message = "L'adresse mail est obligatoire pour s'inscrire.";
+            message = getResources().getString(R.string.sign_up_mail);
             mail.setBackgroundResource(R.drawable.error_edit_text_bg);
             mail.getBackground().setAlpha(50);
         } else if (code == 2) {
-            message = "Le mot de passe est obligatoire pour s'inscrire.";
+            message = getResources().getString(R.string.sign_up_password);
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.getBackground().setAlpha(50);
         } else if (code == 3) {
-            message = "La confirmation du mot de passe est obligatoire pour s'inscrire.";
+            message = getResources().getString(R.string.confirm_password);
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp_confirm.getBackground().setAlpha(50);
 
         } else if (code == 5) {
-            message = "Le nom est obligatoire pour s'inscrire.";
+            message = getResources().getString(R.string.sign_up_name);
             nom.setBackgroundResource(R.drawable.error_edit_text_bg);
             nom.getBackground().setAlpha(50);
         } else if (code == 7) {
-            message = "Les mots de passes ne sont pas identiques. Veuillez réessayer.";
+            message = getResources().getString(R.string.sign_up_password_mismatch);
             mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp_confirm.setBackgroundResource(R.drawable.error_edit_text_bg);
             mdp.getBackground().setAlpha(50);
             mdp_confirm.getBackground().setAlpha(50);
         } else if (code == 8) {
-            message = "Le nom et prenom existe déjà.";
+            message = getResources().getString(R.string.sign_up_name_already_exists);
             nom.setBackgroundResource(R.drawable.error_edit_text_bg);
             nom.getBackground().setAlpha(50);
         } else {
-            message = "Une erreur inconnue a été rencontré. Veuillez réessayer.";
+            message = getResources().getString(R.string.sign_up_error);
         }
 
         Log.d("[INSCRIPTION]", message);

@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.getMenu().removeItem(R.id.navigation_profile);
         navigation.getMenu().add(Menu.NONE, R.id.navigation_dashboard, 1, R.string.title_dashboard).setIcon(R.drawable.ic_dashboard_black_24dp);
         navigation.getMenu().add(Menu.NONE, R.id.navigation_calendar, 2, R.string.title_calendar).setIcon(R.drawable.ic_date_range_black_24dp);
-        if ((firebaseUser != null) && User.getCurrentUser().isPublicAccount()) {
+        if ((firebaseUser != null) && User.getCurrentUser() != null && User.getCurrentUser().isPublicAccount()) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
         }
         navigation.getMenu().add(Menu.NONE, R.id.navigation_profile, 4, R.string.title_profile).setIcon(R.drawable.ic_person_black_24dp);

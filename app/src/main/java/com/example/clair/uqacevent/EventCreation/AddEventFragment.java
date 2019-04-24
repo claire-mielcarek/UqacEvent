@@ -83,7 +83,7 @@ public class AddEventFragment extends Fragment {
 
 
     private void updateText() {
-        String myFormat = "dd/MM/yyyy";
+        String myFormat = getResources().getString(R.string.format_date_eu);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         ETDate.setText(sdf.format(myCalendar.getTime()));
     }
@@ -101,7 +101,7 @@ public class AddEventFragment extends Fragment {
 
     public String getCurrentTime() {
         Date currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("'le' dd/MM/yyyy 'à' HH:mm", Locale.CANADA);
+        SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.format_date_fr_posting_time), Locale.CANADA);
 
         return sdf.format(currentDate);
     }
@@ -130,13 +130,13 @@ public class AddEventFragment extends Fragment {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                         if (databaseError == null) {
-                            Toast.makeText(getActivity(), "Evénement ajouté avec succès", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getResources().getString(R.string.add_event_success), Toast.LENGTH_LONG).show();
                             ETTitle.setText("");
                             ETDescription.setText("");
                             ETDate.setText("");
                             ETPlace.setText("");
                         } else {
-                            Toast.makeText(getActivity(), "Problème avec l'enregistrement, veuillez réessayer", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getResources().getString(R.string.add_event_fail), Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -150,11 +150,11 @@ public class AddEventFragment extends Fragment {
 
     private String checkFields() {
         if (ETTitle.getText().toString().equals("")) {
-            return "Vous devez ajouter un titre";
+            return getResources().getString(R.string.check_fields_title);
         }
 
         if (ETDate.getText().toString().equals("")) {
-            return "Vous devez ajouter une date";
+            return getResources().getString(R.string.check_fields_date);
         }
         return "";
     }

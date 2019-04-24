@@ -1,111 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/colorDashBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_margin="10dp"
+        android:background="@color/colorBackground"
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/nom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/name"
+            android:inputType="text"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/email"
+            android:inputType="text"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/mdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints=""
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/mdp_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:autofillHints=""
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            tools:targetApi="o" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_type" />
+
+        <RadioGroup
+            android:id="@+id/type_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RadioButton
+                android:id="@+id/radioPrivate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:buttonTint="#555555"
+                android:text="@string/private_account"
+                android:textSize="12sp"
+                tools:targetApi="lollipop" />
 
-                <EditText
-                    android:id="@+id/nom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/name"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/mdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/password"
-                    android:inputType="textPassword" />
-
-                <EditText
-                    android:id="@+id/mdp_confirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/account_type" />
-
-                <RadioGroup
-                    android:id="@+id/type_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/radioPrivate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#555555"
-                        android:text="@string/private_account"
-                        android:textSize="12sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioPublic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#555555"
-                        android:text="@string/public_account"
-                        android:textSize="12sp" />
-
-
-                </RadioGroup>
-            </LinearLayout>
-
-
-            <LinearLayout
+            <RadioButton
+                android:id="@+id/radioPublic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:buttonTint="#555555"
+                android:text="@string/public_account"
+                android:textSize="12sp"
+                tools:targetApi="lollipop" />
 
-                <Button
-                    android:id="@+id/inscription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/inscription" />
 
-            </LinearLayout>
-        </LinearLayout>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/inscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/inscription" />
 
 
     </LinearLayout>

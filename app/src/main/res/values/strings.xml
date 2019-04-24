@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">UqacEvent</string>
+    <string name="app_name">UQAC Events</string>
     <string name="title_calendar">Calendrier</string>
     <string name="title_creation">Publier</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_profile">Profil</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_day">Événements</string>
     <string name="connexion">Connexion</string>
@@ -11,7 +11,7 @@
     <string name="password">Mot de Passe</string>
     <string name="confirm_password">Confirmer le mot de passe</string>
     <string name="name">Nom d\'utilisateur</string>
-    <string name="private_account">Compte Privé (Ne permet pas de créer des événements)</string>
+    <string name="private_account">Compte Privé\n(Ne permet pas de créer des événements)</string>
     <string name="public_account">Compte Public</string>
     <string name="account_type">Type de compte : </string>
     <string name="profile_description">A propos : </string>
@@ -19,11 +19,12 @@
     <string name="profile_email">Email : </string>
     <string name="profile_name">Nom d\'utilisateur : </string>
     <string name="enregistrer">Sauvegarder</string>
-    <string name="inscription_btn">Pas encore inscrit ?</string>
+    <string name="inscription_btn">Pas encore inscrit.e ?</string>
     <string name="add_event">Ajouter événement</string>
     <string name="add_event_type">Type d\'événement : </string>
     <string name="modif_saved">Modifications sauvegardées</string>
     <string name="filters">Filtrer</string>
+
     <string name="monday">M</string>
     <string name="tuesday">T</string>
     <string name="wednesday">W</string>
@@ -31,4 +32,53 @@
     <string name="friday">F</string>
     <string name="saturday">S</string>
     <string name="sunday">S</string>
+
+    <string name="title_add_event">Titre</string>
+    <string name="add_event_description">Description</string>
+    <string name="add_event_place">Lieu</string>
+    <string name="add_event_date">Date :</string>
+    <string name="add_event_add_picture">Ajouter image</string>
+    <string name="add_event_content_picture">Contains future added picture</string>
+    <string name="calendar_chevron_left">calendar chevron left</string>
+    <string name="calendar_chevron_right">calendar chevron right</string>
+    <string name="event_organizer">Organisateur</string>
+    <string name="event_date">Date :</string>
+    <string name="event_posting_time">Heure de publication</string>
+    <string name="event_title">Titre</string>
+    <string name="event_description">Description</string>
+    <string name="event_date2">Date</string>
+    <string name="event_place">Lieu :</string>
+    <string name="event_place2">Place</string>
+    <string name="event_picture_content">picture placeholder</string>
+    <string name="add_event_date_format">JJ/MM/AAAA</string>
+    <string name="profile_contact_hint">E-mail, téléphone, réseau social</string>
+    <string name="profile_info_hint">Décrivez votre groupe ou vos actions</string>
+    <string name="profile_picture_content">profile picture placeholder</string>
+    <string name="profile_email2">E-mail</string>
+    <string name="profile_username">Nom d\'utilisateur</string>
+    <string name="event_type">Type évé</string>
+    <string name="event_type2">Type :</string>
+
+    <string name="conference">Conférence</string>
+    <string name="meeting">Rencontre</string>
+    <string name="Soiree">Soirée</string>
+    <string name="div">Divers</string>
+
+    <string name="sign_up_fail">Votre inscription a échoué. L\'adresse mail est peut-être déjà utilisée.</string>
+    <string name="sign_up_mail">L\'adresse mail est obligatoire pour s\'inscrire.</string>
+    <string name="sign_up_password">Le mot de passe est obligatoire pour s\'inscrire.</string>
+    <string name="sign_up_confirm">La confirmation du mot de passe est obligatoire pour s\'inscrire.</string>
+    <string name="sign_up_name">Le nom est obligatoire pour s\'inscrire.</string>
+    <string name="sign_up_password_mismatch">Les mots de passes ne sont pas identiques. Veuillez réessayer.</string>
+    <string name="sign_up_name_already_exists">Le nom et prenom existent déjà.</string>
+    <string name="sign_up_error">Une erreur inconnue a été rencontrée. Veuillez réessayer.</string>
+
+    <string name="check_fields_title">Vous devez ajouter un titre</string>
+    <string name="check_fields_date">Vous devez ajouter une date</string>
+    <string name="add_event_success">Evénement ajouté avec succès</string>
+    <string name="add_event_fail">Problème avec l\'enregistrement, veuillez réessayer"</string>
+
+    <string name="format_date_eu">dd/MM/yyyy</string>
+    <string name="format_date_fr_posting_time">\'le\' dd/MM/yyyy \'à\' HH:mm</string>
+
 </resources>

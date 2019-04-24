@@ -7,7 +7,12 @@
     <color name="colorBackground">#FEFEFD</color>
     <color name="colorAccent">#009F7C</color>
     <color name="colorDashBackground">#dcedc8</color>
+    <color name="colorBlue">#f83d8fb7</color>
 
+    <color name="e_soiree">#ba3ae4</color>
+    <color name="e_conf">#0cc411</color>
+    <color name="e_div">#c9a113</color>
+    <color name="e_meet">#f83d8fb7</color>
 
 
     <color name="white">#FFFFFF</color>
@@ -19,4 +24,7 @@
     <color name="yellow">#FFFFCC00</color>
     <color name="orange">#855b3a</color>
     <color name="black">#000000</color>
+    <color name="colorProfile">#2a7f39</color>
+    <color name="colorTime">#829d86</color>
+    <color name="colorGrey">#f1f1f1</color>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import com.example.clair.uqacevent.R;
@@ -29,6 +30,7 @@ public class EventAdapter extends BaseAdapter{
         String place = e.getPlace();
         String title = e.getTitle();
         String postingTime = e.getPostingTime();
+        String type = e.getType();
         if (view ==null){
             view = LayoutInflater.from(context).inflate(R.layout.event, viewGroup, false);
         }
@@ -39,12 +41,35 @@ public class EventAdapter extends BaseAdapter{
         TextView placeView = view.findViewById(R.id.news_place);
         TextView organizerView = view.findViewById(R.id.news_organizer);
         TextView postingTimeView = view.findViewById(R.id.news_time);
+        TextView typeView = view.findViewById(R.id.newsType);
         titleView.setText(title);
         descrView.setText(description);
         dateView.setText(date);
         placeView.setText(place);
         organizerView.setText(organizer);
         postingTimeView.setText(postingTime);
+        typeView.setText(type);
+        LinearLayout eventLayout = view.findViewById(R.id.event_post);
+
+        switch (type){
+            case "Conférence":
+                eventLayout.setBackgroundResource(R.drawable.border_conf);
+                typeView.setTextColor(view.getResources().getColor(R.color.e_conf));
+                break;
+            case "Soirée":
+                eventLayout.setBackgroundResource(R.drawable.border_soiree);
+                typeView.setTextColor(view.getResources().getColor(R.color.e_soiree));
+                break;
+            case "Rencontre":
+                eventLayout.setBackgroundResource(R.drawable.border_meeting);
+                typeView.setTextColor(view.getResources().getColor(R.color.e_meet));
+                break;
+            case "Divers":
+                eventLayout.setBackgroundResource(R.drawable.border_divers);
+                typeView.setTextColor(view.getResources().getColor(R.color.e_div));
+                break;
+        }
+
 
         return view;
     }

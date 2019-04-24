@@ -20,6 +20,8 @@
         android:layout_marginRight="6sp"
         android:focusable="false"
         android:checked="true"
-        android:padding="10dp"></CheckBox>
+        android:padding="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="6sp"></CheckBox>
 
 </RelativeLayout>

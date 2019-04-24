@@ -15,7 +15,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="60dp"
+        android:background="@color/colorDashBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Titre"
-                android:inputType="textPersonName" />
+                android:hint="@string/title_add_event"
+                android:inputType="textPersonName"
+                android:autofillHints="" tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/editTextDescription"
@@ -38,9 +40,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:ems="10"
-                android:hint="Description"
+                android:hint="@string/add_event_description"
                 android:inputType="textMultiLine"
-                android:paddingBottom="20dp" />
+                android:paddingBottom="20dp"
+                android:autofillHints=""
+                android:layout_marginEnd="10dp" tools:targetApi="o" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="@string/add_event_type"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_marginEnd="10dp" />
 
                 <Spinner
                     android:id="@+id/spinner_type_event"
@@ -68,8 +73,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Lieu"
-                android:inputType="textPersonName" />
+                android:hint="@string/add_event_place"
+                android:inputType="textPersonName"
+                android:autofillHints="" tools:targetApi="o" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,17 +87,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="Date : "
-                    android:textSize="18sp" />
+                    android:text="@string/add_event_date"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="10dp" />
 
                 <EditText
                     android:id="@+id/editTextDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:cursorVisible="false"
                     android:ems="10"
                     android:focusableInTouchMode="false"
-                    android:inputType="date" />
+                    android:hint="@string/add_event_date_format"
+                    android:inputType="date"
+                    tools:targetApi="o" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,20 +109,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="136dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_uqac_default" />
+                    android:contentDescription="@string/add_event_content_picture"
+                    app:srcCompat="@drawable/ic_uqac_default" />
 
                 <Button
                     android:id="@+id/button2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Ajouter image" />
+                    android:text="@string/add_event_add_picture" />
             </LinearLayout>
 
             <Button
