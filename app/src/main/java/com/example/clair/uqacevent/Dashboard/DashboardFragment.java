@@ -69,11 +69,12 @@ public class DashboardFragment extends Fragment {
                         String newsOrganizer = (String) event.child("organizer").getValue();
                         String newsType = (String) event.child("type").getValue();
                         String newsOrganizerId = (String) event.child("organizerId").getValue();
+                        String postingTime = (String) event.child("postingTime").getValue();
 
                         String key = event.getKey();
                         if (!eventsKey.contains(key)) {
                             eventsKey.add(key);
-                            events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer, newsType, newsOrganizerId));
+                            events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer, newsType, newsOrganizerId, postingTime));
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class AddEventFragment extends Fragment {
     private FirebaseAuth auth;
@@ -99,6 +103,13 @@ public class AddEventFragment extends Fragment {
     };
 
 
+    public String getCurrentTime() {
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("'le' dd/MM/yyyy 'à' HH:mm", Locale.CANADA);
+
+        return sdf.format(currentDate);
+    }
+
     private View.OnClickListener addEventListener = new View.OnClickListener(){
 
         @Override
@@ -112,8 +123,9 @@ public class AddEventFragment extends Fragment {
                 String place = ETPlace.getText().toString();
                 String typeEvent = sTypeEvent.getSelectedItem().toString();
                 String organizerId = auth.getInstance().getCurrentUser().getUid();
+                String postingTime = getCurrentTime();
 
-                Event newEvent = new Event(date, description, place, title, User.getCurrentUser().getName(), typeEvent, organizerId);
+                Event newEvent = new Event(date, description, place, title, User.getCurrentUser().getName(), typeEvent, organizerId, postingTime);
 
                 DatabaseReference eventsRef = database.child("Events");
                 newEventRef = eventsRef.push();
