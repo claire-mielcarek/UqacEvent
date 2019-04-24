@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.EventCreation;
+package com.example.clair.uqacevent.Controller.EventCreation;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.clair.uqacevent.Calendar.Event;
+import com.example.clair.uqacevent.Model.Event;
 
-import com.example.clair.uqacevent.Profile.User;
+import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;

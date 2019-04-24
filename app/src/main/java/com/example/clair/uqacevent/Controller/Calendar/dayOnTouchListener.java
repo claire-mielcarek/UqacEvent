@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Controller.Calendar;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 
-import com.example.clair.uqacevent.MainActivity;
+import com.example.clair.uqacevent.Controller.MainActivity;
 import com.example.clair.uqacevent.R;
 
 public class dayOnTouchListener implements OnTouchListener {

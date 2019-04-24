@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Dashboard;
+package com.example.clair.uqacevent.Controller.Dashboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

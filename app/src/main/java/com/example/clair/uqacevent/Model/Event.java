@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Model;
 
 public class Event {
     private String date;

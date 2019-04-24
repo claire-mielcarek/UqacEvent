@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Controller.Calendar;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

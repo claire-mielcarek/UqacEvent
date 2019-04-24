@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Dashboard;
+package com.example.clair.uqacevent.Controller.Dashboard;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.clair.uqacevent.Calendar.Event;
-import com.example.clair.uqacevent.Calendar.EventAdapter;
-import com.example.clair.uqacevent.MainActivity;
-import com.example.clair.uqacevent.Profile.User;
+import com.example.clair.uqacevent.Model.Event;
+import com.example.clair.uqacevent.Controller.Calendar.EventAdapter;
+import com.example.clair.uqacevent.Controller.MainActivity;
+import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -68,12 +68,12 @@ public class DashboardFragment extends Fragment {
                         String postingTime = (String) event.child("postingTime").getValue();
 
                         String key = event.getKey();
-                        String organizerkey =(String) event.child("organizerId").getValue();
-                        if (!eventsKey.contains(key)&& !filteredOrganizersIds.contains(organizerkey)) {
+                        String organizerkey = (String) event.child("organizerId").getValue();
+                        if (!eventsKey.contains(key) && !filteredOrganizersIds.contains(organizerkey)) {
                             eventsKey.add(key);
                             events.add(new Event(newsDate, newsDescription, newsPlace, newsTitle, newsOrganizer, newsType, newsOrganizerId, postingTime));
                         }
-                        if(eventsKey.contains(key) && filteredOrganizersIds.contains(organizerkey)){
+                        if (eventsKey.contains(key) && filteredOrganizersIds.contains(organizerkey)) {
                             int id = eventsKey.indexOf(key);
                             eventsKey.remove(id);
                             events.remove(id);
@@ -119,7 +119,10 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.filters, menu);
+        User user = User.getCurrentUser();
+        if (user != null) {
+            inflater.inflate(R.menu.filters, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 

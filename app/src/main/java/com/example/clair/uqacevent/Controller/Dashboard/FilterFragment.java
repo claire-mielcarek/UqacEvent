@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Dashboard;
+package com.example.clair.uqacevent.Controller.Dashboard;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.clair.uqacevent.MainActivity;
-import com.example.clair.uqacevent.Profile.User;
+import com.example.clair.uqacevent.Controller.MainActivity;
+import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

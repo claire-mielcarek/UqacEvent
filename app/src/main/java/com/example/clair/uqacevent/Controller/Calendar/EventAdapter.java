@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Controller.Calendar;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
+
+import com.example.clair.uqacevent.Model.Event;
 import com.example.clair.uqacevent.R;
 
 public class EventAdapter extends BaseAdapter{

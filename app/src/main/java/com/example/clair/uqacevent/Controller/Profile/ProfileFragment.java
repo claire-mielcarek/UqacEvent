@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Profile;
+package com.example.clair.uqacevent.Controller.Profile;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -18,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.clair.uqacevent.Login.Connexion;
-import com.example.clair.uqacevent.MainActivity;
+import com.example.clair.uqacevent.Controller.Login.ConnectionFragment;
+import com.example.clair.uqacevent.Controller.MainActivity;
+import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -95,7 +96,8 @@ public class ProfileFragment extends Fragment {
         switch (id){
             case R.id.action_logout:
                 auth.signOut();
-                Fragment f = new Connexion();
+                User.setUser(null);
+                Fragment f = new ConnectionFragment();
                 ((MainActivity) activity).openFragment(f, getString(R.string.connexion));
                 ((MainActivity) activity).deleteCreationMenuItem();
                 return true;

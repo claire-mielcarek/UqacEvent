@@ -1,9 +1,9 @@
-package com.example.clair.uqacevent.Profile;
+package com.example.clair.uqacevent.Model;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.clair.uqacevent.Login.IResultConnectUser;
+import com.example.clair.uqacevent.Controller.Login.IResultConnectUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -162,5 +162,9 @@ public class User {
 
     public ArrayList<String> getFilteredOrganizersIds() {
         return filteredOrganizersIds;
+    }
+
+    public static void setUser(User user) {
+        User.user = user;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent;
+package com.example.clair.uqacevent.Controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,13 +12,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.clair.uqacevent.Calendar.CalendarFragment;
-import com.example.clair.uqacevent.Dashboard.DashboardFragment;
-import com.example.clair.uqacevent.EventCreation.AddEventFragment;
-import com.example.clair.uqacevent.Login.Connexion;
-import com.example.clair.uqacevent.Login.IResultConnectUser;
-import com.example.clair.uqacevent.Profile.ProfileFragment;
-import com.example.clair.uqacevent.Profile.User;
+import com.example.clair.uqacevent.Controller.Calendar.CalendarFragment;
+import com.example.clair.uqacevent.Controller.Dashboard.DashboardFragment;
+import com.example.clair.uqacevent.Controller.EventCreation.AddEventFragment;
+import com.example.clair.uqacevent.Controller.Login.ConnectionFragment;
+import com.example.clair.uqacevent.Controller.Login.IResultConnectUser;
+import com.example.clair.uqacevent.Controller.Profile.ProfileFragment;
+import com.example.clair.uqacevent.Model.User;
+import com.example.clair.uqacevent.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         f = new ProfileFragment();
                         openFragment(f, getString(R.string.title_profile));
                     } else {
-                        f = new Connexion();
+                        f = new ConnectionFragment();
                         openFragment(f, getString(R.string.connexion));
                     }
                     return true;

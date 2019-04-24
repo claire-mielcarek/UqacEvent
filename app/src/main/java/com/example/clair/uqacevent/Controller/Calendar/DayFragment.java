@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Controller.Calendar;
 
 
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.clair.uqacevent.Model.Event;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

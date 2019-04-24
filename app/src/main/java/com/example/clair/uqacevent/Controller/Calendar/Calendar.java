@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Calendar;
+package com.example.clair.uqacevent.Controller.Calendar;
 
 //https://github.com/avi-kr/SimpleCalendarTemplate
 
@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.example.clair.uqacevent.MainActivity;
+import com.example.clair.uqacevent.Controller.MainActivity;
 import com.example.clair.uqacevent.R;
 
 /**
