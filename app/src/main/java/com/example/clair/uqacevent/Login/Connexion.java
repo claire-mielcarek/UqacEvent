@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.clair.uqacevent.MainActivity;
 import com.example.clair.uqacevent.Profile.ProfileFragment;
@@ -65,27 +66,32 @@ public class Connexion extends Fragment {
         String mail = edit_mail.getText().toString();
         String mdp = edit_mdp.getText().toString();
 
-        // connexion a la base de donnee avec les donnees de l'utilisateur
+        if ((mail == null) || (mail.length() == 0) || (mdp == null) || (mdp.length() == 0)){
+            Toast.makeText(activity, "Aucun champ ne doit être vide", Toast.LENGTH_LONG).show();
+        }
+        else{
+            // connexion a la base de donnee avec les donnees de l'utilisateur
 
-        auth.signInWithEmailAndPassword(mail, mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    LoadDataAndStartActivity();
-                } else {
-                    // debug
-                    Log.d("Connexion", "signInWithMail:failed : " + task.getException());
-                    // changer la couleur des editText en rouge
-                    edit_mail.setBackgroundResource(R.drawable.error_edit_text_bg);
-                    edit_mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
+            auth.signInWithEmailAndPassword(mail, mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        LoadDataAndStartActivity();
+                    } else {
+                        // debug
+                        Log.d("Connexion", "signInWithMail:failed : " + task.getException());
+                        // changer la couleur des editText en rouge
+                        edit_mail.setBackgroundResource(R.drawable.error_edit_text_bg);
+                        edit_mdp.setBackgroundResource(R.drawable.error_edit_text_bg);
 
-                    edit_mail.getBackground().setAlpha(50);
-                    edit_mdp.getBackground().setAlpha(50);
+                        edit_mail.getBackground().setAlpha(50);
+                        edit_mdp.getBackground().setAlpha(50);
 
-                    Log.d("SIGNIN", "Connexion a échoué");
+                        Log.d("SIGNIN", "Connexion a échoué");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (!this.isAlreadyInstantiated) {
             Log.d("[HOME_ACTIVITY]", "screen wasn't instantiated");
             this.isAlreadyInstantiated = true;
+            createMenu();
 
             // load user data if connected
             if (firebaseUser != null) {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment f = new DashboardFragment();
         openFragment(f, getString(R.string.title_dashboard));
-        createMenu();
+        invalidateOptionsMenu();
     }
 
     /**
@@ -137,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
         MenuItem m = navigation.getMenu().findItem(R.id.navigation_creation);
         if (m == null) {
             navigation.getMenu().add(Menu.NONE, R.id.navigation_creation, 3, R.string.title_creation).setIcon(R.drawable.ic_add_black_24dp);
+            navigation.getMenu().findItem(R.id.navigation_creation).setChecked(false);
+            navigation.getMenu().findItem(R.id.navigation_profile).setChecked(true);
         }
     }
 
