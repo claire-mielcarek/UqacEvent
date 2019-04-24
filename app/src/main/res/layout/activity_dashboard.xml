@@ -88,7 +88,7 @@
             android:textSize="14dp" />
 
         <TextView
-            android:id="@+id/news_time"
+            android:id="@+id/news_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/news_description"
