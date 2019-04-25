@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.clair.uqacevent.Controller.EventAdapter;
 import com.example.clair.uqacevent.Model.Event;
 import com.example.clair.uqacevent.R;
 import com.google.firebase.database.DataSnapshot;

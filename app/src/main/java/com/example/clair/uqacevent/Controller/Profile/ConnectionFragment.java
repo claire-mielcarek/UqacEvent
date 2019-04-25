@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Controller.Login;
+package com.example.clair.uqacevent.Controller.Profile;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.clair.uqacevent.Controller.MainActivity;
-import com.example.clair.uqacevent.Controller.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

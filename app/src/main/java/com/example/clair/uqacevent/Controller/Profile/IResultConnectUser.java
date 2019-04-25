@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Controller.Login;
+package com.example.clair.uqacevent.Controller.Profile;
 
 
 

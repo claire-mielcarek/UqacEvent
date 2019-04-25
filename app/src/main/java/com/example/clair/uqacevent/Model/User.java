@@ -3,7 +3,7 @@ package com.example.clair.uqacevent.Model;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.clair.uqacevent.Controller.Login.IResultConnectUser;
+import com.example.clair.uqacevent.Controller.Profile.IResultConnectUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

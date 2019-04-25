@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.clair.uqacevent.Controller.Login.ConnectionFragment;
 import com.example.clair.uqacevent.Controller.MainActivity;
 import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;

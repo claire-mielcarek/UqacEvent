@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.clair.uqacevent.Model.Event;
-import com.example.clair.uqacevent.Controller.Calendar.EventAdapter;
+import com.example.clair.uqacevent.Controller.EventAdapter;
 import com.example.clair.uqacevent.Controller.MainActivity;
 import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;

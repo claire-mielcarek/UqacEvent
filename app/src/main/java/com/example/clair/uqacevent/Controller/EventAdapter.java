@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Controller.Calendar;
+package com.example.clair.uqacevent.Controller;
 
 import android.content.Context;
 import android.util.Log;

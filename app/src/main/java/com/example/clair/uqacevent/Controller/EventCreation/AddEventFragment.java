@@ -16,9 +16,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.clair.uqacevent.Model.Event;
-
 import com.example.clair.uqacevent.Model.User;
 import com.example.clair.uqacevent.R;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

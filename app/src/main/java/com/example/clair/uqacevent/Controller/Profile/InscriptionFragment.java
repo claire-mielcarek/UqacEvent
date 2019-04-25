@@ -1,4 +1,4 @@
-package com.example.clair.uqacevent.Controller.Login;
+package com.example.clair.uqacevent.Controller.Profile;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.clair.uqacevent.Controller.Profile.ProfileFragment;
 import com.example.clair.uqacevent.Model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
